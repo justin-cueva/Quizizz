@@ -1,7 +1,7 @@
 import { GiPauseButton, GiPlayButton } from "react-icons/gi";
 import { RiFireFill } from "react-icons/ri";
 
-import "../../styles/Quiz.css";
+import "../../styles/quiz/Stats.css";
 
 const Stats = () => {
   return (
