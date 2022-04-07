@@ -10,6 +10,7 @@ const Stats = () => {
         <GiPauseButton />
       </div>
       <div className="question-number">12/20</div>
+
       <div className="progressbar ">
         <div className="progress progress--2">
           <div className="icon--streak">

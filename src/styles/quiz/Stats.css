@@ -1,3 +1,7 @@
+/* .container--stats {
+  max-width: 120rem;
+} */
+
 .stats {
   display: flex;
   align-items: center;
@@ -38,6 +42,8 @@
   align-items: center;
   border-radius: 8px;
   position: relative;
+  max-width: 50rem;
+  margin-left: auto;
 }
 
 .icon--streak {
@@ -63,4 +69,46 @@
 
 .progress--3 {
   width: 100%;
+}
+
+/* 608 PX */
+@media (min-width: 38em) {
+  .stats {
+    font-size: 2.4rem;
+  }
+  .question-number {
+    font-size: 2rem;
+  }
+}
+
+/* 800 PX */
+@media (min-width: 50em) {
+  .stats {
+    font-size: 2.8rem;
+    height: 4rem;
+  }
+  .question-number {
+    font-size: 2.4rem;
+  }
+}
+
+/* 1200 PX */
+@media (min-width: 75em) {
+  .stats {
+    font-size: 3.2rem;
+  }
+  .question-number {
+    font-size: 2.8rem;
+  }
+}
+
+/* 1200 PX */
+@media (min-width: 100em) {
+  .stats {
+    font-size: 4rem;
+    height: 5.2rem;
+  }
+  .question-number {
+    font-size: 3.4rem;
+  }
 }
