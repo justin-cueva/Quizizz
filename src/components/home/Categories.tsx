@@ -1,22 +1,42 @@
-import "../../styles/quiz/CurrentQuestion.css";
+import { connect, ConnectedProps } from "react-redux";
 
-const Categories = () => {
+import "../../styles/quiz/CurrentQuestion.css";
+import "../../styles/home/Categories.css";
+import { getQuestions } from "../../actions";
+
+const categories = [
+  { name: "Celebrities", id: 26 },
+  { name: "Art", id: 25 },
+  { name: "Animals", id: 27 },
+  { name: "Mythology", id: 20 },
+  { name: "Sports", id: 21 },
+  { name: "Geography", id: 22 },
+  { name: "History", id: 23 },
+  { name: "Vehicles", id: 28 },
+];
+
+const Categories = ({ getQuestions }: PropsFromRedux) => {
   return (
-    <div className="current-question ">
+    <div className="container--categories ">
       <div className="choices">
-        <div className="choice choice--2">Celebrities</div>
-        <div className="choice choice--3">Art</div>
-        <div className="choice choice--1">Animals</div>
-        <div className="choice choice--4">Mythology</div>
-      </div>
-      <div className="choices">
-        <div className="choice choice--1">Sports</div>
-        <div className="choice choice--2">Geography</div>
-        <div className="choice choice--3">Histoy</div>
-        <div className="choice choice--4">Vehicles</div>
+        {categories.map((category) => {
+          const colorClass = (category.id % 4) + 1;
+          return (
+            <div
+              key={category.id}
+              className={`choice choice--${colorClass}`}
+              onClick={() => getQuestions(category.id)}
+            >
+              {category.name}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 };
 
-export default Categories;
+const connector = connect(null, { getQuestions });
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Categories);
