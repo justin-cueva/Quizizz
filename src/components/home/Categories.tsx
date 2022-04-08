@@ -1,5 +1,4 @@
 import "../../styles/quiz/CurrentQuestion.css";
-import "../../styles/quiz/Stats.css";
 
 const Categories = () => {
   return (
