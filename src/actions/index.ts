@@ -4,6 +4,6 @@ export const getQuestions = (categoryId: number) => async (dispatch: any) => {
   );
 
   const { results } = await response.json();
-  // console.log(results);
+  console.log(results);
   dispatch({ type: "GET_QUESTIONS", payload: results });
 };

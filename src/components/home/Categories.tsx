@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from "react-redux";
+import { Link } from "react-router-dom";
 
-import "../../styles/quiz/CurrentQuestion.css";
 import "../../styles/home/Categories.css";
 import { getQuestions } from "../../actions";
 
@@ -18,17 +18,18 @@ const categories = [
 const Categories = ({ getQuestions }: PropsFromRedux) => {
   return (
     <div className="container--categories ">
-      <div className="choices">
+      <div className="categories">
         {categories.map((category) => {
           const colorClass = (category.id % 4) + 1;
           return (
-            <div
+            <Link
               key={category.id}
-              className={`choice choice--${colorClass}`}
+              className={`link--to-quiz category category--${colorClass}`}
+              to={"/quiz"}
               onClick={() => getQuestions(category.id)}
             >
-              {category.name}
-            </div>
+              <div>{category.name}</div>
+            </Link>
           );
         })}
       </div>
