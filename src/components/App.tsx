@@ -1,11 +1,19 @@
 import { Fragment } from "react";
 import Quiz from "./quiz/Quiz";
+import Home from "./home/Home";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
-    <Fragment>
-      <Quiz />
-    </Fragment>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path={"/"} element={<Home />} />
+          <Route path={"/quiz"} element={<Quiz />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };
 
