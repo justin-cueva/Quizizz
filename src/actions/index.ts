@@ -11,3 +11,11 @@ export const resetScore = () => {
 export const addToScore = () => {
   return { type: "ADD_TO_SCORE" };
 };
+
+export const setUrl = (url: string) => {
+  return { type: "SET_URL", payload: url };
+};
+
+export const resetUrl = () => {
+  return { type: "RESET_URL" };
+};
