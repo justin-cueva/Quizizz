@@ -29,38 +29,34 @@ const CurrentQuestion = ({
 
   const numberOfQuestions = quizQuestions.length;
 
+  const currentQuestion = quizQuestions[questionNumber - 1];
+
   return (
     <div className="current-question container--content">
       {quizQuestions.length !== 0 ? (
         <Fragment>
           <div className="question">
-            <span
-              onClick={() => console.log(quizQuestions[questionNumber - 1])}
-            >
-              {quizQuestions[questionNumber - 1].question}
-            </span>
+            <span>{currentQuestion.question}</span>
           </div>
           <div className="choices">
-            {quizQuestions[questionNumber - 1]?.options?.map(
-              (option, index) => {
-                return (
-                  <div
-                    key={index + 1}
-                    className={`choice choice--${index + 1}`}
-                    onClick={() => {
-                      if (numberOfQuestions === questionNumber) {
-                        setQuestionNumber(1);
-                        navigate("/summary");
-                      } else {
-                        setQuestionNumber((prev) => prev + 1);
-                      }
-                    }}
-                  >
-                    {option}
-                  </div>
-                );
-              }
-            )}
+            {currentQuestion?.options?.map((option, index) => {
+              return (
+                <div
+                  key={index + 1}
+                  className={`choice choice--${index + 1}`}
+                  onClick={() => {
+                    if (numberOfQuestions === questionNumber) {
+                      setQuestionNumber(1);
+                      navigate("/summary");
+                    } else {
+                      setQuestionNumber((prev) => prev + 1);
+                    }
+                  }}
+                >
+                  {option}
+                </div>
+              );
+            })}
           </div>
         </Fragment>
       ) : (
@@ -69,8 +65,6 @@ const CurrentQuestion = ({
     </div>
   );
 };
-
-// quizQuestions[questionNumber - 1].incorrect_answer
 
 interface RootState {
   quizQuestions: Question[];
