@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
@@ -12,6 +12,7 @@ const CurrentQuestion = ({
   questionNumber,
   setQuestionNumber,
   addToScore,
+  isLoading,
 }: Props) => {
   const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ const CurrentQuestion = ({
 
   return (
     <div className="current-question container--content">
-      {quizQuestions.length !== 0 ? (
+      {!isLoading ? (
         <Fragment>
           <div className="question">
             <span>{currentQuestion.question}</span>
@@ -88,6 +89,7 @@ const connector = connect(mapStateToProps, { addToScore });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
+  isLoading: boolean;
   questionNumber: number;
   setQuestionNumber: React.Dispatch<React.SetStateAction<number>>;
 };
