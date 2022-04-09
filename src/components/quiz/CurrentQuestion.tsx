@@ -1,19 +1,45 @@
-import "../../styles/quiz/CurrentQuestion.css";
+import { useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
-const CurrentQuestion = () => {
+import "../../styles/quiz/CurrentQuestion.css";
+import { Question } from "../../types";
+
+const CurrentQuestion = ({ quizQuestions }: PropsFromRedux) => {
+  const [questionNumber, setQuestionNumber] = useState(1);
+
   return (
     <div className="current-question">
       <div className="question">
-        <span>Durring the summer, the ___ wool has to be sheared. (sheep)</span>
+        <span onClick={() => console.log(quizQuestions[questionNumber - 1])}>
+          How much wood would it take for a would chuck to chuck wood?
+        </span>
       </div>
-      <div className="choices">
-        <div className="choice choice--1">sheeps's</div>
-        <div className="choice choice--2">sheep's</div>
-        <div className="choice choice--3">sheeps'</div>
-        <div className="choice choice--4">sheeps</div>
-      </div>
+      {quizQuestions.length !== 0 && (
+        <div className="choices">
+          {quizQuestions[questionNumber - 1]?.options?.map((option, index) => {
+            return (
+              <div key={index + 1} className={`choice choice--${index + 1}`}>
+                {option}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
 
-export default CurrentQuestion;
+// quizQuestions[questionNumber - 1].incorrect_answer
+
+interface RootState {
+  quizQuestions: Question[];
+}
+
+const mapStateToProps = (state: RootState) => ({
+  quizQuestions: state.quizQuestions,
+});
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(CurrentQuestion);

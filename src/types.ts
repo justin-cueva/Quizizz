@@ -1,5 +1,9 @@
 export type Question = {
-  question: string;
   category: string;
-  mode: string;
+  type: string;
+  difficulty: string;
+  question: string;
+  correct_answer: string;
+  incorrect_answers: string[];
+  options?: string[];
 };
