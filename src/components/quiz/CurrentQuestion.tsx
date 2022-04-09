@@ -25,7 +25,7 @@ const CurrentQuestion = ({
   );
 
   return (
-    <div className="current-question">
+    <div className="current-question container--content">
       {quizQuestions.length !== 0 ? (
         <Fragment>
           <div className="question">
