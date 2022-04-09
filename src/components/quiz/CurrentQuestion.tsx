@@ -1,5 +1,6 @@
 import { useState, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
 import "../../styles/quiz/CurrentQuestion.css";
@@ -10,6 +11,8 @@ const CurrentQuestion = ({
   questionNumber,
   setQuestionNumber,
 }: Props) => {
+  const navigate = useNavigate();
+
   const loadingSpinner = (
     <div className="spinner">
       <Oval
@@ -23,6 +26,8 @@ const CurrentQuestion = ({
       />
     </div>
   );
+
+  const numberOfQuestions = quizQuestions.length;
 
   return (
     <div className="current-question container--content">
@@ -42,7 +47,14 @@ const CurrentQuestion = ({
                   <div
                     key={index + 1}
                     className={`choice choice--${index + 1}`}
-                    onClick={() => setQuestionNumber((prev) => prev + 1)}
+                    onClick={() => {
+                      if (numberOfQuestions === questionNumber) {
+                        setQuestionNumber(1);
+                        navigate("/summary");
+                      } else {
+                        setQuestionNumber((prev) => prev + 1);
+                      }
+                    }}
                   >
                     {option}
                   </div>

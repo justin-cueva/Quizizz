@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import "../../styles/summary/Summary.css";
 import "../../styles/quiz/CurrentQuestion.css";
 import Header from "./Header";
 
 const Summary = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -26,8 +30,15 @@ const Summary = () => {
             </div>
           </div>
           <div className="summary-btns summary__accuracy">
-            <button className="btn--play-again">Play again</button>
-            <button className="btn--new-quiz">Find a new quiz</button>
+            <button
+              className="btn--play-again"
+              onClick={() => navigate("/quiz")}
+            >
+              Play again
+            </button>
+            <button className="btn--new-quiz" onClick={() => navigate("/")}>
+              Find a new quiz
+            </button>
           </div>
         </div>
       </div>
