@@ -25,8 +25,7 @@ const Categories = ({ getQuestions }: PropsFromRedux) => {
             <Link
               key={category.id}
               className={`link--to-quiz category category--${colorClass}`}
-              to={"/quiz"}
-              onClick={() => getQuestions(category.id)}
+              to={`/quiz/amount=5&category=${category.id}&difficulty=easy&type=multiple`}
             >
               <div>{category.name}</div>
             </Link>

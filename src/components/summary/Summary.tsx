@@ -6,8 +6,15 @@ import "../../styles/quiz/CurrentQuestion.css";
 import Header from "./Header";
 import { Question } from "../../types";
 import { resetScore } from "../../actions";
+import { resetUrl } from "../../actions";
 
-const Summary = ({ quizQuestions, score, resetScore }: PropsFromRedux) => {
+const Summary = ({
+  quizQuestions,
+  score,
+  resetScore,
+  quizUrl,
+  resetUrl,
+}: PropsFromRedux) => {
   const navigate = useNavigate();
 
   const finalScore = (
@@ -45,7 +52,7 @@ const Summary = ({ quizQuestions, score, resetScore }: PropsFromRedux) => {
               className="btn--play-again"
               onClick={() => {
                 resetScore();
-                navigate("/quiz");
+                navigate(`/quiz/${quizUrl}`);
               }}
             >
               Play again
@@ -54,6 +61,7 @@ const Summary = ({ quizQuestions, score, resetScore }: PropsFromRedux) => {
               className="btn--new-quiz"
               onClick={() => {
                 resetScore();
+                resetUrl();
                 navigate("/");
               }}
             >
@@ -69,14 +77,16 @@ const Summary = ({ quizQuestions, score, resetScore }: PropsFromRedux) => {
 interface RootState {
   quizQuestions: Question[];
   score: number;
+  quizUrl: string;
 }
 
 const mapStateToProps = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
   score: state.score,
+  quizUrl: state.quizUrl,
 });
 
-const connector = connect(mapStateToProps, { resetScore });
+const connector = connect(mapStateToProps, { resetScore, resetUrl });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
