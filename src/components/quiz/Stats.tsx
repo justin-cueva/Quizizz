@@ -5,22 +5,6 @@ import { RiFireFill } from "react-icons/ri";
 import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
 
-interface RootState {
-  quizQuestions: Question[];
-}
-
-const mapState = (state: RootState) => ({
-  quizQuestions: state.quizQuestions,
-});
-
-const connector = connect(mapState);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type Props = PropsFromRedux & {
-  questionNumber: number;
-};
-
 const Stats = ({ questionNumber, quizQuestions }: Props) => {
   const numberOfQuestions = quizQuestions.length;
   return (
@@ -40,6 +24,22 @@ const Stats = ({ questionNumber, quizQuestions }: Props) => {
       </div>
     </div>
   );
+};
+
+interface RootState {
+  quizQuestions: Question[];
+}
+
+const mapState = (state: RootState) => ({
+  quizQuestions: state.quizQuestions,
+});
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & {
+  questionNumber: number;
 };
 
 export default connector(Stats);
