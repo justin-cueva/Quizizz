@@ -33,9 +33,10 @@ const CurrentQuestion = ({
 
   const currentQuestion = quizQuestions[questionNumber - 1];
 
-  useEffect(() => {
-    console.log(currentQuestion.correct_answer);
-  }, [questionNumber]);
+  useEffect(
+    () => console.log(quizQuestions[questionNumber - 1]?.correct_answer),
+    [questionNumber, quizQuestions]
+  );
 
   return (
     <div className="current-question container--content">

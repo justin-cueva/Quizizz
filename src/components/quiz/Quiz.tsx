@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 import CurrentQuestion from "./CurrentQuestion";
 import Stats from "./Stats";
+import { getQuestions } from "../../actions";
 
-const Quiz = () => {
+const Quiz = ({ getQuestions }: PropsFromRedux) => {
+  const params = useParams();
   const [questionNumber, setQuestionNumber] = useState<number>(1);
+
+  useEffect(() => {
+    console.log(params.quiz);
+    if (typeof params.quiz === "string") {
+      getQuestions(params?.quiz);
+    } else {
+      console.error("invalid path");
+    }
+  }, []);
 
   return (
     <div
@@ -25,4 +38,8 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+const connector = connect(null, { getQuestions });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Quiz);
