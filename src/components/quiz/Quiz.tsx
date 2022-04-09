@@ -5,15 +5,17 @@ import { useLocation, useParams } from "react-router-dom";
 import CurrentQuestion from "./CurrentQuestion";
 import Stats from "./Stats";
 import { getQuestions } from "../../actions";
+import { setUrl } from "../../actions";
 
-const Quiz = ({ getQuestions }: PropsFromRedux) => {
+const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
   const params = useParams();
   const [questionNumber, setQuestionNumber] = useState<number>(1);
 
   useEffect(() => {
     console.log(params.quiz);
     if (typeof params.quiz === "string") {
-      getQuestions(params?.quiz);
+      getQuestions(params.quiz);
+      setUrl(params.quiz);
     } else {
       console.error("invalid path");
     }
@@ -38,7 +40,7 @@ const Quiz = ({ getQuestions }: PropsFromRedux) => {
   );
 };
 
-const connector = connect(null, { getQuestions });
+const connector = connect(null, { getQuestions, setUrl });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
