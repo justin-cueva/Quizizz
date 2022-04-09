@@ -1,11 +1,19 @@
+import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import "../../styles/summary/Summary.css";
 import "../../styles/quiz/CurrentQuestion.css";
 import Header from "./Header";
+import { Question } from "../../types";
+import { resetScore } from "../../actions";
 
-const Summary = () => {
+const Summary = ({ quizQuestions, score, resetScore }: PropsFromRedux) => {
   const navigate = useNavigate();
+
+  const finalScore = (
+    (Number(score) / Number(quizQuestions.length)) *
+    100
+  ).toFixed(0);
 
   return (
     <div
@@ -24,7 +32,7 @@ const Summary = () => {
             <div className="label">Accuracy</div>
             <div className="accuracy-bar">
               <div className="correct">
-                <div className="accuracy-tag">75%</div>
+                <div className="accuracy-tag">{finalScore}%</div>
               </div>
               <div className="wrong" />
             </div>
@@ -32,11 +40,20 @@ const Summary = () => {
           <div className="summary-btns summary__accuracy">
             <button
               className="btn--play-again"
-              onClick={() => navigate("/quiz")}
+              onClick={() => {
+                resetScore();
+                navigate("/quiz");
+              }}
             >
               Play again
             </button>
-            <button className="btn--new-quiz" onClick={() => navigate("/")}>
+            <button
+              className="btn--new-quiz"
+              onClick={() => {
+                resetScore();
+                navigate("/");
+              }}
+            >
               Find a new quiz
             </button>
           </div>
@@ -46,4 +63,18 @@ const Summary = () => {
   );
 };
 
-export default Summary;
+interface RootState {
+  quizQuestions: Question[];
+  score: number;
+}
+
+const mapStateToProps = (state: RootState) => ({
+  quizQuestions: state.quizQuestions,
+  score: state.score,
+});
+
+const connector = connect(mapStateToProps, { resetScore });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Summary);

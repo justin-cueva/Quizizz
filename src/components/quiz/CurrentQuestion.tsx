@@ -1,15 +1,17 @@
-import { useState, Fragment } from "react";
+import { useEffect, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
 import "../../styles/quiz/CurrentQuestion.css";
 import { Question } from "../../types";
+import { addToScore } from "../../actions";
 
 const CurrentQuestion = ({
   quizQuestions,
   questionNumber,
   setQuestionNumber,
+  addToScore,
 }: Props) => {
   const navigate = useNavigate();
 
@@ -31,6 +33,10 @@ const CurrentQuestion = ({
 
   const currentQuestion = quizQuestions[questionNumber - 1];
 
+  useEffect(() => {
+    console.log(currentQuestion.correct_answer);
+  }, [questionNumber]);
+
   return (
     <div className="current-question container--content">
       {quizQuestions.length !== 0 ? (
@@ -45,6 +51,9 @@ const CurrentQuestion = ({
                   key={index + 1}
                   className={`choice choice--${index + 1}`}
                   onClick={() => {
+                    if (currentQuestion.correct_answer === option) {
+                      addToScore();
+                    }
                     if (numberOfQuestions === questionNumber) {
                       setQuestionNumber(1);
                       navigate("/summary");
@@ -74,7 +83,7 @@ const mapStateToProps = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
 });
 
-const connector = connect(mapStateToProps);
+const connector = connect(mapStateToProps, { addToScore });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
