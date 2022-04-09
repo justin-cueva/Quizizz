@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { Oval } from "react-loader-spinner";
 
 import "../../styles/quiz/CurrentQuestion.css";
 import { Question } from "../../types";
@@ -7,23 +8,48 @@ import { Question } from "../../types";
 const CurrentQuestion = ({ quizQuestions }: PropsFromRedux) => {
   const [questionNumber, setQuestionNumber] = useState(1);
 
+  const loadingSpinner = (
+    <div className="spinner">
+      <Oval
+        ariaLabel="loading-indicator"
+        height={100}
+        width={100}
+        strokeWidth={5}
+        strokeWidthSecondary={1}
+        color="#000"
+        secondaryColor="white"
+      />
+    </div>
+  );
+
   return (
     <div className="current-question">
-      <div className="question">
-        <span onClick={() => console.log(quizQuestions[questionNumber - 1])}>
-          How much wood would it take for a would chuck to chuck wood?
-        </span>
-      </div>
-      {quizQuestions.length !== 0 && (
-        <div className="choices">
-          {quizQuestions[questionNumber - 1]?.options?.map((option, index) => {
-            return (
-              <div key={index + 1} className={`choice choice--${index + 1}`}>
-                {option}
-              </div>
-            );
-          })}
-        </div>
+      {quizQuestions.length !== 0 ? (
+        <Fragment>
+          <div className="question">
+            <span
+              onClick={() => console.log(quizQuestions[questionNumber - 1])}
+            >
+              {quizQuestions[questionNumber - 1].question}
+            </span>
+          </div>
+          <div className="choices">
+            {quizQuestions[questionNumber - 1]?.options?.map(
+              (option, index) => {
+                return (
+                  <div
+                    key={index + 1}
+                    className={`choice choice--${index + 1}`}
+                  >
+                    {option}
+                  </div>
+                );
+              }
+            )}
+          </div>
+        </Fragment>
+      ) : (
+        loadingSpinner
       )}
     </div>
   );

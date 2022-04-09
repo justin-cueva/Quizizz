@@ -5,6 +5,7 @@ const Quiz = () => {
   return (
     <div
       style={{
+        position: "relative",
         padding: "1rem",
         minHeight: "100vh",
         display: "flex",

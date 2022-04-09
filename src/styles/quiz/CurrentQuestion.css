@@ -7,6 +7,13 @@
   border-radius: 6px;
 }
 
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .question {
   display: flex;
   align-items: center;
