@@ -30,7 +30,10 @@ const Summary = ({ quizQuestions, score, resetScore }: PropsFromRedux) => {
         <div className="max-width-72">
           <div className="summary__accuracy">
             <div className="label">Accuracy</div>
-            <div className="accuracy-bar">
+            <div
+              className="accuracy-bar"
+              style={{ gridTemplateColumns: `${finalScore}% 1fr` }}
+            >
               <div className="correct">
                 <div className="accuracy-tag">{finalScore}%</div>
               </div>
