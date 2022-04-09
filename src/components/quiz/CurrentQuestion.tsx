@@ -1,19 +1,79 @@
-import "../../styles/quiz/CurrentQuestion.css";
+import { useState, Fragment } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { Oval } from "react-loader-spinner";
 
-const CurrentQuestion = () => {
+import "../../styles/quiz/CurrentQuestion.css";
+import { Question } from "../../types";
+
+const CurrentQuestion = ({
+  quizQuestions,
+  questionNumber,
+  setQuestionNumber,
+}: Props) => {
+  const loadingSpinner = (
+    <div className="spinner">
+      <Oval
+        ariaLabel="loading-indicator"
+        height={100}
+        width={100}
+        strokeWidth={5}
+        strokeWidthSecondary={1}
+        color="#000"
+        secondaryColor="white"
+      />
+    </div>
+  );
+
   return (
     <div className="current-question">
-      <div className="question">
-        <span>Durring the summer, the ___ wool has to be sheared. (sheep)</span>
-      </div>
-      <div className="choices">
-        <div className="choice choice--1">sheeps's</div>
-        <div className="choice choice--2">sheep's</div>
-        <div className="choice choice--3">sheeps'</div>
-        <div className="choice choice--4">sheeps</div>
-      </div>
+      {quizQuestions.length !== 0 ? (
+        <Fragment>
+          <div className="question">
+            <span
+              onClick={() => console.log(quizQuestions[questionNumber - 1])}
+            >
+              {quizQuestions[questionNumber - 1].question}
+            </span>
+          </div>
+          <div className="choices">
+            {quizQuestions[questionNumber - 1]?.options?.map(
+              (option, index) => {
+                return (
+                  <div
+                    key={index + 1}
+                    className={`choice choice--${index + 1}`}
+                    onClick={() => setQuestionNumber((prev) => prev + 1)}
+                  >
+                    {option}
+                  </div>
+                );
+              }
+            )}
+          </div>
+        </Fragment>
+      ) : (
+        loadingSpinner
+      )}
     </div>
   );
 };
 
-export default CurrentQuestion;
+// quizQuestions[questionNumber - 1].incorrect_answer
+
+interface RootState {
+  quizQuestions: Question[];
+}
+
+const mapStateToProps = (state: RootState) => ({
+  quizQuestions: state.quizQuestions,
+});
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & {
+  questionNumber: number;
+  setQuestionNumber: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export default connector(CurrentQuestion);
