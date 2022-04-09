@@ -5,9 +5,11 @@ import { Oval } from "react-loader-spinner";
 import "../../styles/quiz/CurrentQuestion.css";
 import { Question } from "../../types";
 
-const CurrentQuestion = ({ quizQuestions }: PropsFromRedux) => {
-  const [questionNumber, setQuestionNumber] = useState(1);
-
+const CurrentQuestion = ({
+  quizQuestions,
+  questionNumber,
+  setQuestionNumber,
+}: Props) => {
   const loadingSpinner = (
     <div className="spinner">
       <Oval
@@ -40,6 +42,7 @@ const CurrentQuestion = ({ quizQuestions }: PropsFromRedux) => {
                   <div
                     key={index + 1}
                     className={`choice choice--${index + 1}`}
+                    onClick={() => setQuestionNumber((prev) => prev + 1)}
                   >
                     {option}
                   </div>
@@ -67,5 +70,10 @@ const mapStateToProps = (state: RootState) => ({
 
 const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & {
+  questionNumber: number;
+  setQuestionNumber: React.Dispatch<React.SetStateAction<number>>;
+};
 
 export default connector(CurrentQuestion);

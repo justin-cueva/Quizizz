@@ -1,7 +1,11 @@
+import { useState } from "react";
+
 import CurrentQuestion from "./CurrentQuestion";
 import Stats from "./Stats";
 
 const Quiz = () => {
+  const [questionNumber, setQuestionNumber] = useState<number>(1);
+
   return (
     <div
       style={{
@@ -12,8 +16,11 @@ const Quiz = () => {
         flexDirection: "column",
       }}
     >
-      <Stats />
-      <CurrentQuestion />
+      <Stats questionNumber={questionNumber} />
+      <CurrentQuestion
+        questionNumber={questionNumber}
+        setQuestionNumber={setQuestionNumber}
+      />
     </div>
   );
 };
