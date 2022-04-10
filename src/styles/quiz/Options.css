@@ -1,0 +1,9 @@
+.option--correct {
+  background-color: #2dc653;
+}
+.option--wrong {
+  background-color: #e01e37;
+}
+.option--none {
+  opacity: 0;
+}

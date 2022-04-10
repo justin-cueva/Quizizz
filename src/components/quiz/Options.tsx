@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Question } from "../../types";
 import { addToScore } from "../../actions/index";
 import "../../styles/quiz/CurrentQuestion.css";
+import "../../styles/quiz/Options.css";
 
 const Options = ({
   quizQuestions,
@@ -13,15 +14,19 @@ const Options = ({
   addToScore,
 }: Props) => {
   const [isShowingAnswer, setIsShowingAnswer] = useState<boolean>(false);
+  const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean>(false);
+  const [wrongAnswer, setWrongAnswer] = useState(0);
   const navigate = useNavigate();
   const numberOfQuestions = quizQuestions.length;
   const currentQuestion = quizQuestions[questionNumber - 1];
 
   const clickHandler = (option: any) => {
-    console.log("STARTED timer");
     setIsShowingAnswer(true);
+    if (currentQuestion.correct_answer === option) {
+      setAnsweredCorrectly(true);
+      console.log("------------- CORRECT ---------------------");
+    }
     setTimeout(() => {
-      console.log("ENDED timer");
       // when we get the question correct
       if (currentQuestion.correct_answer === option) {
         addToScore();
@@ -35,7 +40,16 @@ const Options = ({
         setQuestionNumber((prev) => prev + 1);
       }
       setIsShowingAnswer(false);
-    }, 5000);
+      setAnsweredCorrectly(false);
+      setWrongAnswer(0);
+    }, 1250);
+  };
+
+  const showingAnswerColor = (option: string, correctAnswer: string) => {
+    if (option === correctAnswer) {
+      return "option--correct";
+    }
+    if (option !== correctAnswer) return "option--none";
   };
 
   return (
@@ -44,9 +58,28 @@ const Options = ({
         return (
           <div
             key={index + 1}
-            className={`choice choice--${index + 1}`}
+            className={`choice choice--${index + 1} ${
+              isShowingAnswer && !answeredCorrectly && wrongAnswer === index + 1
+                ? "option--wrong"
+                : `${
+                    isShowingAnswer
+                      ? showingAnswerColor(
+                          option,
+                          currentQuestion.correct_answer
+                        )
+                      : ""
+                  }`
+            } `}
+            // if showing answer and answered wrong
             onClick={() => {
-              isShowingAnswer ? console.log("nothing") : clickHandler(option);
+              if (option !== currentQuestion.correct_answer)
+                setWrongAnswer(index + 1);
+              console.log("---------------- WRONG ----------------");
+              if (isShowingAnswer) {
+                console.log("nothing");
+              } else {
+                clickHandler(option);
+              }
             }}
           >
             {option}
