@@ -1,20 +1,17 @@
 import { useEffect, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
 import "../../styles/quiz/CurrentQuestion.css";
 import { Question } from "../../types";
-import { addToScore } from "../../actions";
+import Options from "./Options";
 
 const CurrentQuestion = ({
   quizQuestions,
   questionNumber,
   setQuestionNumber,
-  addToScore,
+  isLoading,
 }: Props) => {
-  const navigate = useNavigate();
-
   const loadingSpinner = (
     <div className="spinner">
       <Oval
@@ -29,8 +26,6 @@ const CurrentQuestion = ({
     </div>
   );
 
-  const numberOfQuestions = quizQuestions.length;
-
   const currentQuestion = quizQuestions[questionNumber - 1];
 
   useEffect(
@@ -40,34 +35,15 @@ const CurrentQuestion = ({
 
   return (
     <div className="current-question container--content">
-      {quizQuestions.length !== 0 ? (
+      {!isLoading ? (
         <Fragment>
           <div className="question">
             <span>{currentQuestion.question}</span>
           </div>
-          <div className="choices">
-            {currentQuestion?.options?.map((option, index) => {
-              return (
-                <div
-                  key={index + 1}
-                  className={`choice choice--${index + 1}`}
-                  onClick={() => {
-                    if (currentQuestion.correct_answer === option) {
-                      addToScore();
-                    }
-                    if (numberOfQuestions === questionNumber) {
-                      setQuestionNumber(1);
-                      navigate("/summary");
-                    } else {
-                      setQuestionNumber((prev) => prev + 1);
-                    }
-                  }}
-                >
-                  {option}
-                </div>
-              );
-            })}
-          </div>
+          <Options
+            questionNumber={questionNumber}
+            setQuestionNumber={setQuestionNumber}
+          />
         </Fragment>
       ) : (
         loadingSpinner
@@ -84,10 +60,11 @@ const mapStateToProps = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
 });
 
-const connector = connect(mapStateToProps, { addToScore });
+const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
+  isLoading: boolean;
   questionNumber: number;
   setQuestionNumber: React.Dispatch<React.SetStateAction<number>>;
 };
