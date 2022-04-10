@@ -19,7 +19,6 @@ const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
   };
 
   useEffect(() => {
-    console.log(params.quiz);
     if (typeof params.quiz === "string") {
       initQuiz(params.quiz);
     } else {

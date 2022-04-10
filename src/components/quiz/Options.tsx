@@ -24,7 +24,6 @@ const Options = ({
     setIsShowingAnswer(true);
     if (currentQuestion.correct_answer === option) {
       setAnsweredCorrectly(true);
-      console.log("------------- CORRECT ---------------------");
     }
     setTimeout(() => {
       // when we get the question correct
@@ -74,9 +73,7 @@ const Options = ({
             onClick={() => {
               if (option !== currentQuestion.correct_answer)
                 setWrongAnswer(index + 1);
-              console.log("---------------- WRONG ----------------");
               if (isShowingAnswer) {
-                console.log("nothing");
               } else {
                 clickHandler(option);
               }
