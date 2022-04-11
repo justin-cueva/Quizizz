@@ -9,22 +9,31 @@ const Stats = ({ questionNumber, quizQuestions, streak }: Props) => {
   const numberOfQuestions = quizQuestions.length;
   return (
     <div className="stats">
-      <div className="icon--pause">
-        <GiPauseButton />
+      <div className="stats--top">
+        <div className="timer-bar">
+          <div className="time-left" style={{ width: "10%" }}></div>
+        </div>
       </div>
-      <div className="question-number">
-        {questionNumber}/{numberOfQuestions}
-      </div>
-      <div className="progressbar ">
-        <div
-          className="progress"
-          style={{
-            width: `${(Number(streak) / Number(quizQuestions.length)) * 100}%`,
-          }}
-        >
-          <div className={`icon--streak ${streak ? "on-a-streak" : ""}`}>
-            <RiFireFill />
-            {streak}
+      <div className="stats--bottom">
+        <div className="icon--pause">
+          <GiPauseButton />
+        </div>
+        <div className="question-number">
+          {questionNumber}/{numberOfQuestions}
+        </div>
+        <div className="progressbar ">
+          <div
+            className="progress"
+            style={{
+              width: `${
+                (Number(streak) / Number(quizQuestions.length)) * 100
+              }%`,
+            }}
+          >
+            <div className={`icon--streak ${streak ? "on-a-streak" : ""}`}>
+              <RiFireFill />
+              {streak}
+            </div>
           </div>
         </div>
       </div>

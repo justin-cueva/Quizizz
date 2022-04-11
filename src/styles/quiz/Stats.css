@@ -4,6 +4,26 @@
 
 .stats {
   display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.timer-bar {
+  width: 100%;
+  height: 1rem;
+  background-color: transparent;
+  border-radius: 100px;
+}
+
+.time-left {
+  background-color: white;
+  height: inherit;
+  border-radius: inherit;
+  transition: all 1ms ease;
+}
+
+.stats--bottom {
+  display: flex;
   align-items: center;
   gap: 0.8rem;
   font-size: 2rem;
