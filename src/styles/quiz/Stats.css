@@ -49,26 +49,21 @@
 .icon--streak {
   position: absolute;
   right: 1rem;
+  transition: all 300ms ease;
 }
-
+/* #64b5f6 */
 .progress {
   display: flex;
   align-items: center;
-  background: linear-gradient(to right, #2196f3, #64b5f6);
+  background: linear-gradient(to right, #2196f3, #93cbf9);
   height: 100%;
   border-radius: inherit;
+  transition: all 400ms ease;
 }
 
-.progress--1 {
-  width: 33%;
-}
-
-.progress--2 {
-  width: 66%;
-}
-
-.progress--3 {
-  width: 100%;
+.on-a-streak {
+  color: #faa307;
+  font-size: 3.2rem;
 }
 
 /* 608 PX */

@@ -36,6 +36,7 @@ const Quiz = ({ getQuestions, setUrl, resetStreak }: PropsFromRedux) => {
         display: "flex",
         flexDirection: "column",
         position: "relative",
+        overflow: "scroll",
       }}
     >
       <Stats questionNumber={questionNumber} />
