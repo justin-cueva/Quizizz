@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Question } from "../../types";
 import { addToScore } from "../../actions/index";
+import { addToStreak } from "../../actions/streakActions";
+import { resetStreak } from "../../actions/streakActions";
 import "../../styles/quiz/CurrentQuestion.css";
 import "../../styles/quiz/Options.css";
 
@@ -12,6 +14,8 @@ const Options = ({
   questionNumber,
   setQuestionNumber,
   addToScore,
+  addToStreak,
+  resetStreak,
 }: Props) => {
   const [isShowingAnswer, setIsShowingAnswer] = useState<boolean>(false);
   const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean>(false);
@@ -24,6 +28,11 @@ const Options = ({
     setIsShowingAnswer(true);
     if (currentQuestion.correct_answer === option) {
       setAnsweredCorrectly(true);
+      addToStreak();
+    }
+    if (currentQuestion.correct_answer !== option) {
+      // reset the streak
+      resetStreak();
     }
     setTimeout(() => {
       // when we get the question correct
@@ -95,7 +104,11 @@ const mapStateToProps = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
 });
 
-const connector = connect(mapStateToProps, { addToScore });
+const connector = connect(mapStateToProps, {
+  addToScore,
+  addToStreak,
+  resetStreak,
+});
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
