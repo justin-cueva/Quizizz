@@ -16,8 +16,13 @@ const Stats = ({ questionNumber, quizQuestions, streak }: Props) => {
         {questionNumber}/{numberOfQuestions}
       </div>
       <div className="progressbar ">
-        <div className="progress progress--2">
-          <div className="icon--streak">
+        <div
+          className="progress"
+          style={{
+            width: `${(Number(streak) / Number(quizQuestions.length)) * 100}%`,
+          }}
+        >
+          <div className={`icon--streak ${streak ? "on-a-streak" : ""}`}>
             <RiFireFill />
             {streak}
           </div>
