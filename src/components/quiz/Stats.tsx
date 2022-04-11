@@ -5,7 +5,7 @@ import { RiFireFill } from "react-icons/ri";
 import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
 
-const Stats = ({ questionNumber, quizQuestions }: Props) => {
+const Stats = ({ questionNumber, quizQuestions, streak }: Props) => {
   const numberOfQuestions = quizQuestions.length;
   return (
     <div className="stats">
@@ -18,7 +18,8 @@ const Stats = ({ questionNumber, quizQuestions }: Props) => {
       <div className="progressbar ">
         <div className="progress progress--2">
           <div className="icon--streak">
-            <RiFireFill />5
+            <RiFireFill />
+            {streak}
           </div>
         </div>
       </div>
@@ -28,10 +29,12 @@ const Stats = ({ questionNumber, quizQuestions }: Props) => {
 
 interface RootState {
   quizQuestions: Question[];
+  streak: number;
 }
 
 const mapState = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
+  streak: state.streak,
 });
 
 const connector = connect(mapState);
