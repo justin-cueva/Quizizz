@@ -6,13 +6,15 @@ import CurrentQuestion from "./CurrentQuestion";
 import Stats from "./Stats";
 import { getQuestions } from "../../actions";
 import { setUrl } from "../../actions";
+import { resetStreak } from "../../actions/streakActions";
 
-const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
+const Quiz = ({ getQuestions, setUrl, resetStreak }: PropsFromRedux) => {
   const params = useParams();
   const [questionNumber, setQuestionNumber] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const initQuiz = async (quiz: string) => {
+    resetStreak();
     await getQuestions(quiz);
     setIsLoading(false);
     setUrl(quiz);
@@ -46,7 +48,7 @@ const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
   );
 };
 
-const connector = connect(null, { getQuestions, setUrl });
+const connector = connect(null, { getQuestions, setUrl, resetStreak });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
