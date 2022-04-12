@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { GiPauseButton, GiPlayButton } from "react-icons/gi";
 import { RiFireFill } from "react-icons/ri";
@@ -6,12 +7,26 @@ import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
 
 const Stats = ({ questionNumber, quizQuestions, streak }: Props) => {
+  const [timeLeft, setTimeLeft] = useState(2000);
   const numberOfQuestions = quizQuestions.length;
+
+  useEffect(() => {
+    if (timeLeft > 1) {
+      setTimeout(() => {
+        console.log(timeLeft);
+        setTimeLeft((prev) => prev - 1);
+      }, 10);
+    }
+  }, [timeLeft]);
+
   return (
     <div className="stats">
       <div className="stats--top">
         <div className="timer-bar">
-          <div className="time-left" style={{ width: "10%" }}></div>
+          <div
+            className="time-left"
+            style={{ width: `${timeLeft / 20}%` }}
+          ></div>
         </div>
       </div>
       <div className="stats--bottom">
