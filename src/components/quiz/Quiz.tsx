@@ -39,7 +39,10 @@ const Quiz = ({ getQuestions, setUrl, resetStreak }: PropsFromRedux) => {
         overflow: "scroll",
       }}
     >
-      <Stats questionNumber={questionNumber} />
+      <Stats
+        questionNumber={questionNumber}
+        setQuestionNumber={setQuestionNumber}
+      />
       <CurrentQuestion
         isLoading={isLoading}
         questionNumber={questionNumber}

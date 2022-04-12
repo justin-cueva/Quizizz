@@ -6,8 +6,13 @@ import { RiFireFill } from "react-icons/ri";
 import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
 
-const Stats = ({ questionNumber, quizQuestions, streak }: Props) => {
-  const [timeLeft, setTimeLeft] = useState(2000);
+const Stats = ({
+  questionNumber,
+  quizQuestions,
+  streak,
+  setQuestionNumber,
+}: Props) => {
+  const [timeLeft, setTimeLeft] = useState(1000);
   const numberOfQuestions = quizQuestions.length;
 
   useEffect(() => {
@@ -16,6 +21,9 @@ const Stats = ({ questionNumber, quizQuestions, streak }: Props) => {
         console.log(timeLeft);
         setTimeLeft((prev) => prev - 1);
       }, 10);
+    } else {
+      setTimeLeft(1000);
+      setQuestionNumber((prev) => prev + 1);
     }
   }, [timeLeft]);
 
@@ -25,7 +33,7 @@ const Stats = ({ questionNumber, quizQuestions, streak }: Props) => {
         <div className="timer-bar">
           <div
             className="time-left"
-            style={{ width: `${timeLeft / 20}%` }}
+            style={{ width: `${timeLeft / 10}%` }}
           ></div>
         </div>
       </div>
@@ -72,6 +80,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
   questionNumber: number;
+  setQuestionNumber: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default connector(Stats);
