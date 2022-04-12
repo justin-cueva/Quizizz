@@ -6,6 +6,7 @@ import { RiFireFill } from "react-icons/ri";
 
 import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
+import { resetStreak } from "../../actions/streakActions";
 
 const Stats = ({
   questionNumber,
@@ -13,6 +14,7 @@ const Stats = ({
   streak,
   setQuestionNumber,
   isShowingResults,
+  resetStreak,
 }: Props) => {
   const [timeLeft, setTimeLeft] = useState(1000);
   const numberOfQuestions = quizQuestions.length;
@@ -29,7 +31,9 @@ const Stats = ({
       if (!isLastQuestion) {
         setQuestionNumber((prev) => prev + 1);
         setTimeLeft(1000);
+        resetStreak();
       } else {
+        resetStreak();
         // when the time runs out on the last question
         navigate("/summary");
       }
@@ -89,7 +93,7 @@ const mapState = (state: RootState) => ({
   isShowingResults: state.isShowingResults,
 });
 
-const connector = connect(mapState);
+const connector = connect(mapState, { resetStreak });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
