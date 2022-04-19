@@ -8,6 +8,7 @@ import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
 import { resetStreak } from "../../actions/streakActions";
 import { setWaitingForQuiz } from "../../actions";
+import PauseModal from "./PauseModal";
 
 const Stats = ({
   questionNumber,
@@ -19,6 +20,7 @@ const Stats = ({
   setWaitingForQuiz,
   questionsAreLoaded,
 }: Props) => {
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState(1000);
   const numberOfQuestions = quizQuestions.length;
   const isLastQuestion = quizQuestions.length === questionNumber;
@@ -51,8 +53,13 @@ const Stats = ({
     setTimeLeft(1000);
   }, [questionNumber]);
 
+  const element = document.querySelector("#pausing-modal");
+
   return (
     <div className="stats">
+      {element !== null && modalIsOpen && (
+        <PauseModal setIsOpen={setModalIsOpen} element={element} />
+      )}
       <div className="stats--top">
         <div className="timer-bar">
           <div
@@ -62,7 +69,7 @@ const Stats = ({
         </div>
       </div>
       <div className="stats--bottom">
-        <div className="icon--pause">
+        <div className="icon--pause" onClick={() => setModalIsOpen(true)}>
           <GiPauseButton />
         </div>
         <div className="question-number">
