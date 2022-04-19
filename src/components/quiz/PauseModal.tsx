@@ -5,15 +5,13 @@ import "../../styles/quiz/Modal.css";
 
 type Props = {
   element: Element;
-  closeModal: () => {
-    type: string;
-  };
+  pausingAC: (payload: boolean) => { type: string; payload: boolean };
 };
 
-const PauseModal = ({ element, closeModal }: Props) => {
+const PauseModal = ({ element, pausingAC }: Props) => {
   return ReactDOM.createPortal(
     <React.Fragment>
-      <div className="overlay" onClick={() => closeModal()} />
+      <div className="overlay" onClick={() => pausingAC(false)} />
       <div className="modal">
         <div className="container--relative modal__container--flex">
           <div className="modal__progress-bar">
@@ -29,7 +27,7 @@ const PauseModal = ({ element, closeModal }: Props) => {
           </div>
           <button
             type="button"
-            onClick={() => closeModal()}
+            onClick={() => pausingAC(false)}
             className="modal__resume-button"
           >
             Resume

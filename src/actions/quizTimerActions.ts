@@ -1,5 +1,5 @@
 export const quizIsPaused = (payload: boolean) => {
-  return { type: "QUIZ_IS_PAUSED", payload };
+  return { type: "QUIZ_IS_PAUSED", payload: payload };
 };
 
 export const questionsAreLoaded = (payload: boolean) => {

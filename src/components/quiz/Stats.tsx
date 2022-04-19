@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { GiPauseButton, GiPlayButton } from "react-icons/gi";
+import { GiPauseButton } from "react-icons/gi";
 import { RiFireFill } from "react-icons/ri";
 
 import "../../styles/quiz/Stats.css";
@@ -9,20 +9,19 @@ import { Question } from "../../types";
 import { resetStreak } from "../../actions/streakActions";
 import { setWaitingForQuiz } from "../../actions";
 import PauseModal from "./PauseModal";
-import { pauseQuiz, unpauseQuiz } from "../../actions/pauseQuizActions";
+import { quizIsPaused as pausingAC } from "../../actions/quizTimerActions";
 
 const Stats = ({
   questionNumber,
-  unpauseQuiz,
   quizQuestions,
   streak,
-  setQuestionNumber,
   isShowingResults,
-  resetStreak,
-  setWaitingForQuiz,
   questionsAreLoaded,
-  quizIsPaused,
-  pauseQuiz,
+  quizTimer,
+  pausingAC,
+  resetStreak,
+  setQuestionNumber,
+  setWaitingForQuiz,
 }: Props) => {
   const [timeLeft, setTimeLeft] = useState(1000);
   const numberOfQuestions = quizQuestions.length;
@@ -34,7 +33,7 @@ const Stats = ({
   }, []);
 
   useEffect(() => {
-    if (isShowingResults || !questionsAreLoaded || quizIsPaused) {
+    if (isShowingResults || !questionsAreLoaded || quizTimer.quizIsPaused) {
     } else if (timeLeft > 1) {
       setTimeout(() => {
         setTimeLeft((prev) => prev - 1);
@@ -50,7 +49,7 @@ const Stats = ({
         navigate("/summary");
       }
     }
-  }, [timeLeft, isShowingResults, questionsAreLoaded, quizIsPaused]);
+  }, [timeLeft, isShowingResults, questionsAreLoaded, quizTimer.quizIsPaused]);
 
   useEffect(() => {
     setTimeLeft(1000);
@@ -60,8 +59,8 @@ const Stats = ({
 
   return (
     <div className="stats">
-      {element !== null && quizIsPaused && (
-        <PauseModal closeModal={unpauseQuiz} element={element} />
+      {element !== null && quizTimer.quizIsPaused && (
+        <PauseModal pausingAC={pausingAC} element={element} />
       )}
       <div className="stats--top">
         <div className="timer-bar">
@@ -72,7 +71,7 @@ const Stats = ({
         </div>
       </div>
       <div className="stats--bottom">
-        <div className="icon--pause" onClick={() => pauseQuiz()}>
+        <div className="icon--pause" onClick={() => pausingAC(true)}>
           <GiPauseButton />
         </div>
         <div className="question-number">
@@ -103,7 +102,11 @@ interface RootState {
   streak: number;
   isShowingResults: boolean;
   questionsAreLoaded: boolean;
-  quizIsPaused: boolean;
+  quizTimer: {
+    quizIsPaused: boolean;
+    questionsAreLoaded: boolean;
+    isShowingResults: boolean;
+  };
 }
 
 const mapState = (state: RootState) => ({
@@ -111,14 +114,13 @@ const mapState = (state: RootState) => ({
   streak: state.streak,
   isShowingResults: state.isShowingResults,
   questionsAreLoaded: state.questionsAreLoaded,
-  quizIsPaused: state.quizIsPaused,
+  quizTimer: state.quizTimer,
 });
 
 const connector = connect(mapState, {
   resetStreak,
-  pauseQuiz,
   setWaitingForQuiz,
-  unpauseQuiz,
+  pausingAC,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
