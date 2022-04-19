@@ -6,6 +6,7 @@ import quizUrlReducer from "./quizUrlReducer";
 import streakReducer from "./streakReducer";
 import isShowingResultsReducer from "./isShowingResultsReducer";
 import questionsLoadedReducer from "./questionsLoadedReducer";
+import pauseQuizReducer from "./pauseQuizReducer";
 
 export default combineReducers({
   quizQuestions: quizQuestionsReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   streak: streakReducer,
   isShowingResults: isShowingResultsReducer,
   questionsAreLoaded: questionsLoadedReducer,
+  quizIsPaused: pauseQuizReducer,
 });

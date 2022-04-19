@@ -48,12 +48,6 @@
   background-color: #ff595e;
 }
 
-/* .summary-btns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-} */
-
 .summary-btns {
   display: flex;
   flex-direction: column;
