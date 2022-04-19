@@ -7,7 +7,7 @@ import { RiFireFill } from "react-icons/ri";
 import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
 import { resetStreak } from "../../actions/streakActions";
-import { setWaitingForQuiz } from "../../actions";
+import { questionsAreLoaded as setQuestionsAreLoaded } from "../../actions/quizTimerActions";
 import PauseModal from "./PauseModal";
 import { quizIsPaused as pausingAC } from "../../actions/quizTimerActions";
 
@@ -16,12 +16,11 @@ const Stats = ({
   quizQuestions,
   streak,
   isShowingResults,
-  questionsAreLoaded,
   quizTimer,
   pausingAC,
   resetStreak,
   setQuestionNumber,
-  setWaitingForQuiz,
+  setQuestionsAreLoaded,
 }: Props) => {
   const [timeLeft, setTimeLeft] = useState(1000);
   const numberOfQuestions = quizQuestions.length;
@@ -29,11 +28,15 @@ const Stats = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    setWaitingForQuiz();
+    setQuestionsAreLoaded(false);
   }, []);
 
   useEffect(() => {
-    if (isShowingResults || !questionsAreLoaded || quizTimer.quizIsPaused) {
+    if (
+      isShowingResults ||
+      !quizTimer.questionsAreLoaded ||
+      quizTimer.quizIsPaused
+    ) {
     } else if (timeLeft > 1) {
       setTimeout(() => {
         setTimeLeft((prev) => prev - 1);
@@ -49,7 +52,12 @@ const Stats = ({
         navigate("/summary");
       }
     }
-  }, [timeLeft, isShowingResults, questionsAreLoaded, quizTimer.quizIsPaused]);
+  }, [
+    timeLeft,
+    isShowingResults,
+    quizTimer.questionsAreLoaded,
+    quizTimer.quizIsPaused,
+  ]);
 
   useEffect(() => {
     setTimeLeft(1000);
@@ -101,7 +109,6 @@ interface RootState {
   quizQuestions: Question[];
   streak: number;
   isShowingResults: boolean;
-  questionsAreLoaded: boolean;
   quizTimer: {
     quizIsPaused: boolean;
     questionsAreLoaded: boolean;
@@ -113,14 +120,13 @@ const mapState = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
   streak: state.streak,
   isShowingResults: state.isShowingResults,
-  questionsAreLoaded: state.questionsAreLoaded,
   quizTimer: state.quizTimer,
 });
 
 const connector = connect(mapState, {
   resetStreak,
-  setWaitingForQuiz,
   pausingAC,
+  setQuestionsAreLoaded,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

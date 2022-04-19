@@ -2,11 +2,7 @@ export const getQuestions = (path: string) => async (dispatch: any) => {
   const response = await fetch(`https://opentdb.com/api.php?${path}`);
   const { results } = await response.json();
   dispatch({ type: "GET_QUESTIONS", payload: results });
-  dispatch({ type: "GOT_QUESTIONS" });
-};
-
-export const setWaitingForQuiz = () => {
-  return { type: "SET_WAITING_FOR_QUIZ" };
+  dispatch({ type: "QUESTIONS_ARE_LOADED", payload: true });
 };
 
 export const resetScore = () => {

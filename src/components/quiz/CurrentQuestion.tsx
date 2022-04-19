@@ -11,7 +11,13 @@ const CurrentQuestion = ({
   questionNumber,
   setQuestionNumber,
   isLoading,
+  questionsAreLoaded,
 }: Props) => {
+  useEffect(() => {
+    // console.log(`questions are loaded: ${quesL}`);
+    console.log(`questions are loaded: ${questionsAreLoaded}`);
+  }, [questionsAreLoaded]);
+
   const loadingSpinner = (
     <div className="spinner">
       <Oval
@@ -54,10 +60,16 @@ const CurrentQuestion = ({
 
 interface RootState {
   quizQuestions: Question[];
+  quizTimer: {
+    questionsAreLoaded: boolean;
+    quizIsPaused: boolean;
+    isShowingResults: boolean;
+  };
 }
 
 const mapStateToProps = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
+  questionsAreLoaded: state.quizTimer.questionsAreLoaded,
 });
 
 const connector = connect(mapStateToProps);
