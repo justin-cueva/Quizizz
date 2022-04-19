@@ -9,9 +9,11 @@ import { Question } from "../../types";
 import { resetStreak } from "../../actions/streakActions";
 import { setWaitingForQuiz } from "../../actions";
 import PauseModal from "./PauseModal";
+import { pauseQuiz, unpauseQuiz } from "../../actions/pauseQuizActions";
 
 const Stats = ({
   questionNumber,
+  unpauseQuiz,
   quizQuestions,
   streak,
   setQuestionNumber,
@@ -19,8 +21,9 @@ const Stats = ({
   resetStreak,
   setWaitingForQuiz,
   questionsAreLoaded,
+  quizIsPaused,
+  pauseQuiz,
 }: Props) => {
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState(1000);
   const numberOfQuestions = quizQuestions.length;
   const isLastQuestion = quizQuestions.length === questionNumber;
@@ -31,7 +34,7 @@ const Stats = ({
   }, []);
 
   useEffect(() => {
-    if (isShowingResults || !questionsAreLoaded) {
+    if (isShowingResults || !questionsAreLoaded || quizIsPaused) {
     } else if (timeLeft > 1) {
       setTimeout(() => {
         setTimeLeft((prev) => prev - 1);
@@ -47,7 +50,7 @@ const Stats = ({
         navigate("/summary");
       }
     }
-  }, [timeLeft, isShowingResults, questionsAreLoaded]);
+  }, [timeLeft, isShowingResults, questionsAreLoaded, quizIsPaused]);
 
   useEffect(() => {
     setTimeLeft(1000);
@@ -57,8 +60,8 @@ const Stats = ({
 
   return (
     <div className="stats">
-      {element !== null && modalIsOpen && (
-        <PauseModal setIsOpen={setModalIsOpen} element={element} />
+      {element !== null && quizIsPaused && (
+        <PauseModal closeModal={unpauseQuiz} element={element} />
       )}
       <div className="stats--top">
         <div className="timer-bar">
@@ -69,7 +72,7 @@ const Stats = ({
         </div>
       </div>
       <div className="stats--bottom">
-        <div className="icon--pause" onClick={() => setModalIsOpen(true)}>
+        <div className="icon--pause" onClick={() => pauseQuiz()}>
           <GiPauseButton />
         </div>
         <div className="question-number">
@@ -100,6 +103,7 @@ interface RootState {
   streak: number;
   isShowingResults: boolean;
   questionsAreLoaded: boolean;
+  quizIsPaused: boolean;
 }
 
 const mapState = (state: RootState) => ({
@@ -107,9 +111,15 @@ const mapState = (state: RootState) => ({
   streak: state.streak,
   isShowingResults: state.isShowingResults,
   questionsAreLoaded: state.questionsAreLoaded,
+  quizIsPaused: state.quizIsPaused,
 });
 
-const connector = connect(mapState, { resetStreak, setWaitingForQuiz });
+const connector = connect(mapState, {
+  resetStreak,
+  pauseQuiz,
+  setWaitingForQuiz,
+  unpauseQuiz,
+});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

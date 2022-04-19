@@ -5,15 +5,17 @@ import "../../styles/quiz/Modal.css";
 
 type Props = {
   element: Element;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  closeModal: () => {
+    type: string;
+  };
 };
 
-const PauseModal = ({ element, setIsOpen }: Props) => {
+const PauseModal = ({ element, closeModal }: Props) => {
   return ReactDOM.createPortal(
     <React.Fragment>
-      <div className="overlay" onClick={() => setIsOpen(false)} />
+      <div className="overlay" onClick={() => closeModal()} />
       <div className="modal">
-        <button onClick={() => setIsOpen(false)}>close</button>
+        <button onClick={() => closeModal()}>close</button>
         PauseModal
       </div>
     </React.Fragment>,
