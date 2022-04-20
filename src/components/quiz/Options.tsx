@@ -7,6 +7,10 @@ import { addToScore } from "../../actions/index";
 import { addToStreak } from "../../actions/streakActions";
 import { resetStreak } from "../../actions/streakActions";
 import { setIsShowingResults } from "../../actions/quizTimerActions";
+import {
+  addToScoreAndStreak,
+  resetStreak as resetStreakk,
+} from "../../actions/quizStatsActions";
 import "../../styles/quiz/CurrentQuestion.css";
 import "../../styles/quiz/Options.css";
 
@@ -19,6 +23,8 @@ const Options = ({
   addToStreak,
   resetStreak,
   setIsShowingResults,
+  addToScoreAndStreak,
+  resetStreakk,
 }: Props) => {
   const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean>(false);
   const [wrongAnswer, setWrongAnswer] = useState(0);
@@ -28,20 +34,25 @@ const Options = ({
 
   const clickHandler = (option: any) => {
     setIsShowingResults(true);
-    // ****************************
     if (currentQuestion.correct_answer === option) {
       setAnsweredCorrectly(true);
+      //
       addToStreak();
+      addToScore();
+      //
+      addToScoreAndStreak();
     }
     if (currentQuestion.correct_answer !== option) {
       // reset the streak
       resetStreak();
+      resetStreakk();
     }
     setTimeout(() => {
       // when we get the question correct
-      if (currentQuestion.correct_answer === option) {
-        addToScore();
-      }
+      // if (currentQuestion.correct_answer === option) {
+      //   addToScore();
+      //   addToScoreAndStreak();
+      // }
       // when we finished the quiz
       if (numberOfQuestions === questionNumber) {
         setQuestionNumber(1);
@@ -121,6 +132,8 @@ const connector = connect(mapStateToProps, {
   addToStreak,
   resetStreak,
   setIsShowingResults,
+  addToScoreAndStreak,
+  resetStreakk,
 });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

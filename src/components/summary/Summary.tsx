@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +7,7 @@ import "../../styles/quiz/CurrentQuestion.css";
 import Header from "./Header";
 import { Question } from "../../types";
 import { resetScore } from "../../actions";
+import { resetScoreAndStreak } from "../../actions/quizStatsActions";
 import { resetUrl } from "../../actions";
 
 const Summary = ({
@@ -14,8 +16,13 @@ const Summary = ({
   resetScore,
   quizUrl,
   resetUrl,
+  resetScoreAndStreak,
 }: PropsFromRedux) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => resetScoreAndStreak();
+  }, []);
 
   const finalScore = (
     (Number(score) / Number(quizQuestions.length)) *
@@ -86,7 +93,11 @@ const mapStateToProps = (state: RootState) => ({
   quizUrl: state.quizUrl,
 });
 
-const connector = connect(mapStateToProps, { resetScore, resetUrl });
+const connector = connect(mapStateToProps, {
+  resetScore,
+  resetUrl,
+  resetScoreAndStreak,
+});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

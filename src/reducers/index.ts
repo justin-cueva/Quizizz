@@ -5,6 +5,7 @@ import scoreReducer from "./scoreReducer";
 import quizUrlReducer from "./quizUrlReducer";
 import streakReducer from "./streakReducer";
 import quizTimerReducer from "./quizTimerReducer";
+import quizStatsReducer from "./quizStatsReducer";
 
 export default combineReducers({
   quizQuestions: quizQuestionsReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   quizUrl: quizUrlReducer,
   streak: streakReducer,
   quizTimer: quizTimerReducer,
+  quizStats: quizStatsReducer,
 });
