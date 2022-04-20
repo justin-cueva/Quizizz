@@ -67,7 +67,11 @@ const Stats = ({
   return (
     <div className="stats">
       {element !== null && quizTimer.quizIsPaused && (
-        <PauseModal setQuizIsPaused={setQuizIsPaused} element={element} />
+        <PauseModal
+          questionNumber={questionNumber}
+          setQuizIsPaused={setQuizIsPaused}
+          element={element}
+        />
       )}
       <div className="stats--top">
         <div className="timer-bar">
