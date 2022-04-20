@@ -1,0 +1,25 @@
+.heading--main {
+  color: #fff;
+  font-size: 2.4rem;
+}
+
+/* 800 PX */
+@media (min-width: 50em) {
+  .heading--main {
+    font-size: 2.8rem;
+  }
+}
+
+/* 1200 PX */
+@media (min-width: 75em) {
+  .heading--main {
+    font-size: 3.2rem;
+  }
+}
+
+/* 1600 PX */
+@media (min-width: 100em) {
+  .heading--main {
+    font-size: 4rem;
+  }
+}
