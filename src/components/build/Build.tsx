@@ -1,4 +1,5 @@
 import Header from "./Header";
+import BuildBody from "./BuildBody";
 
 const Build = () => {
   return (
@@ -11,6 +12,7 @@ const Build = () => {
       }}
     >
       <Header />
+      <BuildBody />
     </div>
   );
 };
