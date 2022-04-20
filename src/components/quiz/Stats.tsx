@@ -108,7 +108,6 @@ const Stats = ({
 interface RootState {
   quizQuestions: Question[];
   streak: number;
-  isShowingResults: boolean;
   quizTimer: {
     quizIsPaused: boolean;
     questionsAreLoaded: boolean;
@@ -119,7 +118,7 @@ interface RootState {
 const mapState = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
   streak: state.streak,
-  isShowingResults: state.isShowingResults,
+  isShowingResults: state.quizTimer.isShowingResults,
   quizTimer: state.quizTimer,
 });
 

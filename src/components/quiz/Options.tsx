@@ -6,22 +6,20 @@ import { Question } from "../../types";
 import { addToScore } from "../../actions/index";
 import { addToStreak } from "../../actions/streakActions";
 import { resetStreak } from "../../actions/streakActions";
-import { setIsShowing, hideResults } from "../../actions/showingResultsActions";
+import { setIsShowingResults } from "../../actions/quizTimerActions";
 import "../../styles/quiz/CurrentQuestion.css";
 import "../../styles/quiz/Options.css";
 
 const Options = ({
   quizQuestions,
   questionNumber,
+  isShowingResults,
   setQuestionNumber,
   addToScore,
   addToStreak,
   resetStreak,
-  setIsShowing,
-  hideResults,
-  isShowingResults,
+  setIsShowingResults,
 }: Props) => {
-  // const [isShowingAnswer, setIsShowingAnswer] = useState<boolean>(false);
   const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean>(false);
   const [wrongAnswer, setWrongAnswer] = useState(0);
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ const Options = ({
   const currentQuestion = quizQuestions[questionNumber - 1];
 
   const clickHandler = (option: any) => {
-    setIsShowing();
+    setIsShowingResults(true);
     // ****************************
     if (currentQuestion.correct_answer === option) {
       setAnsweredCorrectly(true);
@@ -52,7 +50,7 @@ const Options = ({
       } else {
         setQuestionNumber((prev) => prev + 1);
       }
-      hideResults();
+      setIsShowingResults(false);
       setAnsweredCorrectly(false);
       setWrongAnswer(0);
     }, 1250);
@@ -106,19 +104,23 @@ const Options = ({
 interface RootState {
   quizQuestions: Question[];
   isShowingResults: boolean;
+  quizTimer: {
+    questionsAreLoaded: boolean;
+    quizIsPaused: boolean;
+    isShowingResults: boolean;
+  };
 }
 
 const mapStateToProps = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
-  isShowingResults: state.isShowingResults,
+  isShowingResults: state.quizTimer.isShowingResults,
 });
 
 const connector = connect(mapStateToProps, {
   addToScore,
   addToStreak,
   resetStreak,
-  setIsShowing,
-  hideResults,
+  setIsShowingResults,
 });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
