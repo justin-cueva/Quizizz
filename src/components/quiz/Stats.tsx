@@ -6,10 +6,9 @@ import { RiFireFill } from "react-icons/ri";
 
 import "../../styles/quiz/Stats.css";
 import { Question } from "../../types";
-import { resetStreak } from "../../actions/streakActions";
-import { questionsAreLoaded as setQuestionsAreLoaded } from "../../actions/quizTimerActions";
+import { setQuestionsAreLoaded } from "../../actions/quizTimerActions";
 import PauseModal from "./PauseModal";
-import { quizIsPaused as pausingAC } from "../../actions/quizTimerActions";
+import { setQuizIsPaused } from "../../actions/quizTimerActions";
 
 const Stats = ({
   questionNumber,
@@ -17,8 +16,7 @@ const Stats = ({
   streak,
   isShowingResults,
   quizTimer,
-  pausingAC,
-  resetStreak,
+  setQuizIsPaused,
   setQuestionNumber,
   setQuestionsAreLoaded,
 }: Props) => {
@@ -41,13 +39,14 @@ const Stats = ({
       setTimeout(() => {
         setTimeLeft((prev) => prev - 1);
       }, 10);
+      // when time runs out
     } else {
       if (!isLastQuestion) {
+        // when time runs out but not on the last question
         setQuestionNumber((prev) => prev + 1);
         setTimeLeft(1000);
-        resetStreak();
+        // resetStreak();
       } else {
-        resetStreak();
         // when the time runs out on the last question
         navigate("/summary");
       }
@@ -68,7 +67,7 @@ const Stats = ({
   return (
     <div className="stats">
       {element !== null && quizTimer.quizIsPaused && (
-        <PauseModal pausingAC={pausingAC} element={element} />
+        <PauseModal setQuizIsPaused={setQuizIsPaused} element={element} />
       )}
       <div className="stats--top">
         <div className="timer-bar">
@@ -79,7 +78,7 @@ const Stats = ({
         </div>
       </div>
       <div className="stats--bottom">
-        <div className="icon--pause" onClick={() => pausingAC(true)}>
+        <div className="icon--pause" onClick={() => setQuizIsPaused(true)}>
           <GiPauseButton />
         </div>
         <div className="question-number">
@@ -107,7 +106,10 @@ const Stats = ({
 
 interface RootState {
   quizQuestions: Question[];
-  streak: number;
+  quizStats: {
+    score: number;
+    streak: number;
+  };
   quizTimer: {
     quizIsPaused: boolean;
     questionsAreLoaded: boolean;
@@ -117,14 +119,13 @@ interface RootState {
 
 const mapState = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
-  streak: state.streak,
+  streak: state.quizStats.streak,
   isShowingResults: state.quizTimer.isShowingResults,
   quizTimer: state.quizTimer,
 });
 
 const connector = connect(mapState, {
-  resetStreak,
-  pausingAC,
+  setQuizIsPaused,
   setQuestionsAreLoaded,
 });
 

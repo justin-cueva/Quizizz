@@ -1,10 +1,8 @@
-// setQuizIsPaused
-export const quizIsPaused = (payload: boolean) => {
+export const setQuizIsPaused = (payload: boolean) => {
   return { type: "QUIZ_IS_PAUSED", payload: payload };
 };
 
-// setQuestionsAreLoaded
-export const questionsAreLoaded = (payload: boolean) => {
+export const setQuestionsAreLoaded = (payload: boolean) => {
   return { type: "QUESTIONS_ARE_LOADED", payload };
 };
 

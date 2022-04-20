@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import CurrentQuestion from "./CurrentQuestion";
 import Stats from "./Stats";
 import { getQuestions } from "../../actions";
 import { setUrl } from "../../actions";
-import { resetStreak } from "../../actions/streakActions";
 
-const Quiz = ({ getQuestions, setUrl, resetStreak }: PropsFromRedux) => {
+const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
   const params = useParams();
   const [questionNumber, setQuestionNumber] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const initQuiz = async (quiz: string) => {
-    resetStreak();
     await getQuestions(quiz);
     setIsLoading(false);
     setUrl(quiz);
@@ -52,7 +50,7 @@ const Quiz = ({ getQuestions, setUrl, resetStreak }: PropsFromRedux) => {
   );
 };
 
-const connector = connect(null, { getQuestions, setUrl, resetStreak });
+const connector = connect(null, { getQuestions, setUrl });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

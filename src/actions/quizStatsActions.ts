@@ -11,7 +11,3 @@ export const resetScoreAndStreak = () => (dispatch: any) => {
 export const resetStreak = () => {
   return { type: "RESET_STREAK_n" };
 };
-
-// export const addToStreak = () => {
-//   return { type: "ADD_TO_STREAK" };
-// };

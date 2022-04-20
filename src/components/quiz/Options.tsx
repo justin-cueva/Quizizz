@@ -3,13 +3,10 @@ import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Question } from "../../types";
-import { addToScore } from "../../actions/index";
-import { addToStreak } from "../../actions/streakActions";
-import { resetStreak } from "../../actions/streakActions";
 import { setIsShowingResults } from "../../actions/quizTimerActions";
 import {
   addToScoreAndStreak,
-  resetStreak as resetStreakk,
+  resetStreak,
 } from "../../actions/quizStatsActions";
 import "../../styles/quiz/CurrentQuestion.css";
 import "../../styles/quiz/Options.css";
@@ -19,12 +16,9 @@ const Options = ({
   questionNumber,
   isShowingResults,
   setQuestionNumber,
-  addToScore,
-  addToStreak,
-  resetStreak,
   setIsShowingResults,
   addToScoreAndStreak,
-  resetStreakk,
+  resetStreak,
 }: Props) => {
   const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean>(false);
   const [wrongAnswer, setWrongAnswer] = useState(0);
@@ -36,16 +30,11 @@ const Options = ({
     setIsShowingResults(true);
     if (currentQuestion.correct_answer === option) {
       setAnsweredCorrectly(true);
-      //
-      addToStreak();
-      addToScore();
-      //
       addToScoreAndStreak();
     }
     if (currentQuestion.correct_answer !== option) {
       // reset the streak
       resetStreak();
-      resetStreakk();
     }
     setTimeout(() => {
       // when we get the question correct
@@ -128,12 +117,9 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const connector = connect(mapStateToProps, {
-  addToScore,
-  addToStreak,
-  resetStreak,
   setIsShowingResults,
   addToScoreAndStreak,
-  resetStreakk,
+  resetStreak,
 });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

@@ -5,14 +5,6 @@ export const getQuestions = (path: string) => async (dispatch: any) => {
   dispatch({ type: "QUESTIONS_ARE_LOADED", payload: true });
 };
 
-export const resetScore = () => {
-  return { type: "RESET_SCORE" };
-};
-
-export const addToScore = () => {
-  return { type: "ADD_TO_SCORE" };
-};
-
 export const setUrl = (url: string) => {
   return { type: "SET_URL", payload: url };
 };
