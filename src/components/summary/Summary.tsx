@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -5,17 +6,21 @@ import "../../styles/summary/Summary.css";
 import "../../styles/quiz/CurrentQuestion.css";
 import Header from "./Header";
 import { Question } from "../../types";
-import { resetScore } from "../../actions";
+import { resetScoreAndStreak } from "../../actions/quizStatsActions";
 import { resetUrl } from "../../actions";
 
 const Summary = ({
   quizQuestions,
   score,
-  resetScore,
   quizUrl,
   resetUrl,
+  resetScoreAndStreak,
 }: PropsFromRedux) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => resetScoreAndStreak();
+  }, []);
 
   const finalScore = (
     (Number(score) / Number(quizQuestions.length)) *
@@ -51,7 +56,6 @@ const Summary = ({
             <button
               className="btn--play-again"
               onClick={() => {
-                resetScore();
                 navigate(`/quiz/${quizUrl}`);
               }}
             >
@@ -60,7 +64,6 @@ const Summary = ({
             <button
               className="btn--new-quiz"
               onClick={() => {
-                resetScore();
                 resetUrl();
                 navigate("/");
               }}
@@ -78,15 +81,22 @@ interface RootState {
   quizQuestions: Question[];
   score: number;
   quizUrl: string;
+  quizStats: {
+    score: number;
+    streak: number;
+  };
 }
 
 const mapStateToProps = (state: RootState) => ({
   quizQuestions: state.quizQuestions,
-  score: state.score,
+  score: state.quizStats.score,
   quizUrl: state.quizUrl,
 });
 
-const connector = connect(mapStateToProps, { resetScore, resetUrl });
+const connector = connect(mapStateToProps, {
+  resetUrl,
+  resetScoreAndStreak,
+});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

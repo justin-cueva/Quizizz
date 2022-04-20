@@ -45,14 +45,12 @@
 }
 
 .modal__progress--correct {
-  width: 66%;
   height: 110%;
   background-color: #8ac926;
   z-index: 21;
 }
 
 .modal__progress--wrong {
-  width: 60%;
   height: inherit;
   border-radius: inherit;
   background-color: #ff595e;
@@ -61,11 +59,19 @@
 
 .modal__icon--running {
   position: absolute;
-  left: 60%;
   transform: translateX(-50%);
   top: -3.2rem;
   font-size: 2.4rem;
   color: #fff;
+}
+
+.modal__icon--finish {
+  position: absolute;
+  transform: translateX(-50%);
+  top: -3.2rem;
+  font-size: 2.4rem;
+  color: #fff;
+  left: 100%;
 }
 
 .modal__remaining-questions {
