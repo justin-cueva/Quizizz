@@ -8,34 +8,26 @@ import CategoryQuestions from "./CategoryQuestions";
 import { Question, Category } from "../../types";
 import { getCategories } from "../../actions/buildActions";
 import "../../styles/build/build.css";
+import { getACategoriesQuestions } from "../../actions/buildActions";
 
-const Build = ({ getCategories, categories }: PropsFromRedux) => {
-  // **************
+const Build = ({
+  getCategories,
+  categories,
+  getACategoriesQuestions,
+  allCategoryQuestions,
+}: PropsFromRedux) => {
   const initBuildPage = () => {
     getCategories();
   };
+  const [selectedCategory, setSelectedCategory] = useState<Category>({
+    id: 25,
+    name: "Art",
+  });
 
   useEffect(() => initBuildPage(), []);
 
-  // **************
-  const [selectedCategory, setSelectedCategory] = useState<Category>();
-  const [questions, setQuestions] = useState<Question[]>();
-
-  const fetchCategoryQuestions = async () => {
-    try {
-      const response = await fetch(
-        "https://opentdb.com/api.php?amount=5&category=25&difficulty=easy&type=multiple"
-      );
-      const data = await response.json();
-
-      setQuestions(data.results);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
-    fetchCategoryQuestions();
+    getACategoriesQuestions(selectedCategory);
   }, [selectedCategory]);
 
   return (
@@ -47,21 +39,32 @@ const Build = ({ getCategories, categories }: PropsFromRedux) => {
           setSelectedCategory={setSelectedCategory}
         />
         <Form />
-        <CategoryQuestions questions={questions} />
+        <CategoryQuestions
+          questions={allCategoryQuestions[selectedCategory.id]}
+        />
       </div>
     </div>
   );
 };
 
 type RootState = {
-  build: { categories: Category[]; categoryQuestions: {} };
+  build: {
+    categories: Category[];
+    categoryQuestions: { [key: number]: Question[] };
+  };
 };
 
 const mapStateToProps = (state: RootState) => {
-  return { categories: state.build.categories };
+  return {
+    categories: state.build.categories,
+    allCategoryQuestions: state.build.categoryQuestions,
+  };
 };
 
-const connector = connect(mapStateToProps, { getCategories });
+const connector = connect(mapStateToProps, {
+  getCategories,
+  getACategoriesQuestions,
+});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

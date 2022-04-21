@@ -5,9 +5,7 @@ import { Category } from "../../types";
 
 type Props = {
   categories: Category[];
-  setSelectedCategory: React.Dispatch<
-    React.SetStateAction<Category | undefined>
-  >;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<Category>>;
 };
 
 const CategoryTags = ({ categories, setSelectedCategory }: Props) => {

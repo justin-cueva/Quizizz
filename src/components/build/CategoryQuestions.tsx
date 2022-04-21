@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { FcMinus } from "react-icons/fc";
 import { TiMinus } from "react-icons/ti";
@@ -9,10 +10,13 @@ type Props = {
 };
 
 const CategoryQuestions = ({ questions }: Props) => {
+  useEffect(() => {
+    console.log(questions);
+  }, [questions]);
   return (
     <div className="container--selected-category-questions">
       {questions &&
-        questions.slice(0, 5).map((question: Question) => {
+        questions.map((question: Question) => {
           return (
             <div
               className="container--selected-category-question"
