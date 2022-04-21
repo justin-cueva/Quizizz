@@ -1,0 +1,143 @@
+.page--build {
+  padding: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading--main {
+  color: #fff;
+  font-size: 2.4rem;
+}
+
+/* BODY OF BUILD PAGE */
+
+.container--build-body {
+  color: #fff;
+  z-index: 2;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #6a4c93;
+  border-radius: 6px;
+}
+
+.scq-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  margin: 1rem;
+  gap: 0.8rem;
+}
+
+.scq-form button,
+.scq-form input {
+  padding: 2rem 2.8rem;
+  border-radius: 12px;
+  border: none;
+}
+
+.scq-form input {
+  width: 100%;
+}
+
+.scq-form button {
+  width: 100%;
+  background-color: #1982c4;
+  color: #fff;
+  font-weight: 600;
+  cursor: none;
+}
+
+.build__tags {
+  background-color: #222;
+  padding: 1rem 0;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.build__tag {
+  border-radius: 100px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+.color--1 {
+  background-color: #1982c4;
+}
+.color--2 {
+  background-color: #8ac926;
+}
+.color--3 {
+  background-color: #ffca3a;
+}
+.color--4 {
+  background-color: #ff595e;
+}
+
+.container--selected-category-questions {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+}
+
+.container--selected-category-question {
+  background-color: #8ac926;
+  background-color: #ff595e;
+  border-radius: 6px;
+  margin: 1rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+
+.scq__selectbox {
+  /* background-color: rgba(0, 0, 255, 0.3); */
+  font-size: 2.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.selected-category-question__actual-question {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.selected-category-questions__options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.correct--scq {
+  /* color: green; */
+  background-color: green;
+  margin-right: auto;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* 800 PX */
+@media (min-width: 50em) {
+  .heading--main {
+    font-size: 2.8rem;
+  }
+}
+
+/* 1200 PX */
+@media (min-width: 75em) {
+  .heading--main {
+    font-size: 3.2rem;
+  }
+}
+
+/* 1600 PX */
+@media (min-width: 100em) {
+  .heading--main {
+    font-size: 4rem;
+  }
+}

@@ -7,3 +7,5 @@ export type Question = {
   incorrect_answers: string[];
   options?: string[];
 };
+
+export type Category = { id: number; name: string };
