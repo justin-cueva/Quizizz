@@ -1,4 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, Fragment } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 
 import "../../styles/auth/form.css";
 
@@ -6,6 +11,7 @@ const Form = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formMode, setFormMode] = useState<string>("LOGIN");
+  const [user, setUser] = useState<string>("");
 
   const heading = formMode === "SIGN_UP" ? "Sign Up" : "Login";
   const submitButtonText = formMode === "SIGN_UP" ? "Create account" : "Login";
@@ -14,54 +20,69 @@ const Form = () => {
       ? "Login with existing account"
       : "Create new account";
 
-  const clearInputs = () => {
-    setEmail("");
-    setPassword("");
+  const register = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      setUser(user.user.uid);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (formMode === "SIGN_UP") {
-      console.log("tryingn to SIGN UP...");
-      console.log(email);
-      console.log(password);
+  const login = async () => {
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      setUser(user.user.uid);
+    } catch (err) {
+      console.error(err);
     }
-    if (formMode === "LOGIN") {
-      console.log("trying to LOGIN...");
-      console.log(email);
-      console.log(password);
-    }
-    clearInputs();
+  };
+
+  const logout = () => {
+    setUser("");
   };
 
   return (
-    <form onSubmit={(e) => submitHandler(e)} className="auth__form">
-      <h3 className="auth__label">{heading}</h3>
-      <div className="auth__fields">
-        <div className="auth__field">
-          <label>Your Email</label>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} />
+    <Fragment>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (formMode === "SIGN_UP") register();
+          if (formMode === "LOGIN") login();
+
+          setEmail("");
+          setPassword("");
+        }}
+        className="auth__form"
+      >
+        <h3 className="auth__label">{heading}</h3>
+        <div className="auth__fields">
+          <div className="auth__field">
+            <label>Your Email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="auth__field">
+            <label>Your Password</label>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
         </div>
-        <div className="auth__field">
-          <label>Your Password</label>
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <div className="auth__actions">
+          <button type="submit">{submitButtonText}</button>
+          <button
+            onClick={() =>
+              setFormMode((prev) => (prev === "SIGN_UP" ? "LOGIN" : "SIGN_UP"))
+            }
+            type="button"
+          >
+            {otherButtonText}
+          </button>
         </div>
-      </div>
-      <div className="auth__actions">
-        <button type="submit">{submitButtonText}</button>
-        <button
-          onClick={() =>
-            setFormMode((prev) => (prev === "SIGN_UP" ? "LOGIN" : "SIGN_UP"))
-          }
-          type="button"
-        >
-          {otherButtonText}
-        </button>
-      </div>
-    </form>
+      </form>
+      {user ? user : ""}
+    </Fragment>
   );
 };
 
