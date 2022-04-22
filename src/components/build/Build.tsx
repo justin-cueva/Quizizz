@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import Header from "./Header";
+// import Header from "./Header";
+import Header from "../reusables/Header";
 import CategoryTags from "./CategoryTags";
 import Form from "./Form";
 import CategoryQuestions from "./CategoryQuestions";
@@ -32,7 +33,13 @@ const Build = ({
 
   return (
     <div className="page--build">
-      <Header />
+      <Header
+        page="Build a Quiz"
+        links={[
+          { to: "/", name: "home" },
+          { to: "/auth", name: "auth" },
+        ]}
+      />
       <div className="container--build-body">
         <CategoryTags
           categories={categories}
