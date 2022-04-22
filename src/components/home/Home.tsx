@@ -1,9 +1,21 @@
+import { connect, ConnectedProps } from "react-redux";
+
 import "../../styles/quiz/CurrentQuestion.css";
 import "../../styles/quiz/Stats.css";
 import Categories from "./Categories";
-import Header from "./Header";
+import Header from "../reusables/Header";
 
-const Home = () => {
+const Home = (props: PropsFromRedux) => {
+  const links = props.isLoggedIn
+    ? [
+        { to: "/build", name: "build" },
+        { to: "/myQuizizz", name: "my quizizz" },
+      ]
+    : [
+        { to: "/auth", name: "auth" },
+        { to: "/build", name: "build" },
+      ];
+
   return (
     <div
       style={{
@@ -13,10 +25,24 @@ const Home = () => {
         flexDirection: "column",
       }}
     >
-      <Header />
+      <Header page="Choose a Quiz" links={links} />
       <Categories />
     </div>
   );
 };
 
-export default Home;
+type RootState = {
+  account: { isLoggedIn: boolean; userId: string };
+};
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    isLoggedIn: state.account.isLoggedIn,
+  };
+};
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Home);

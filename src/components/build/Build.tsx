@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-// import Header from "./Header";
 import Header from "../reusables/Header";
 import CategoryTags from "./CategoryTags";
 import Form from "./Form";
@@ -16,6 +15,7 @@ const Build = ({
   categories,
   getACategoriesQuestions,
   allCategoryQuestions,
+  isLoggedIn,
 }: PropsFromRedux) => {
   const initBuildPage = () => {
     getCategories();
@@ -31,15 +31,19 @@ const Build = ({
     getACategoriesQuestions(selectedCategory);
   }, [selectedCategory]);
 
+  const links = isLoggedIn
+    ? [
+        { to: "/myQuizizz", name: "my quizizz" },
+        { to: "/", name: "home" },
+      ]
+    : [
+        { to: "/", name: "home" },
+        { to: "/auth", name: "auth" },
+      ];
+
   return (
     <div className="page--build">
-      <Header
-        page="Build a Quiz"
-        links={[
-          { to: "/", name: "home" },
-          { to: "/auth", name: "auth" },
-        ]}
-      />
+      <Header page="Build a Quiz" links={links} />
       <div className="container--build-body">
         <CategoryTags
           categories={categories}
@@ -55,6 +59,9 @@ const Build = ({
 };
 
 type RootState = {
+  account: {
+    isLoggedIn: boolean;
+  };
   build: {
     categories: Category[];
     categoryQuestions: { [key: number]: Question[] };
@@ -65,6 +72,7 @@ const mapStateToProps = (state: RootState) => {
   return {
     categories: state.build.categories,
     allCategoryQuestions: state.build.categoryQuestions,
+    isLoggedIn: state.account.isLoggedIn,
   };
 };
 

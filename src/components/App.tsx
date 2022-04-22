@@ -5,6 +5,7 @@ import Home from "./home/Home";
 import Summary from "./summary/Summary";
 import Build from "./build/Build";
 import Auth from "./auth/Auth";
+import MyQuizizz from "./myQuizizz/MyQuizizz";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path={"/summary"} element={<Summary />} />
           <Route path={"/build"} element={<Build />} />
           <Route path={"/auth"} element={<Auth />} />
+          <Route path="/myQuizizz" element={<MyQuizizz />} />
         </Routes>
       </BrowserRouter>
     </div>
