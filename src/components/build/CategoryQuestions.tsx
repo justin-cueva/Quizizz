@@ -7,14 +7,8 @@ import { Question } from "../../types";
 
 type Props = {
   questions: Question[] | undefined;
-  addQuestion: (question: Question) => {
-    type: string;
-    payload: Question;
-  };
-  removeQuestion: (question: Question) => {
-    type: string;
-    payload: Question;
-  };
+  addQuestion: (question: Question) => void;
+  removeQuestion: (question: Question) => void;
 };
 
 const CategoryQuestions = ({
@@ -22,16 +16,15 @@ const CategoryQuestions = ({
   addQuestion,
   removeQuestion,
 }: Props) => {
-  useEffect(() => {
-    console.log(questions);
-  }, [questions]);
   return (
     <div className="container--selected-category-questions">
       {questions &&
         questions.map((question: Question) => {
           return (
             <div
-              className="container--selected-category-question"
+              className={`container--selected-category-question ${
+                question.isAdded ? "color--2" : "color--4"
+              }`}
               key={question.question}
             >
               <div className="scq__left">
@@ -56,9 +49,15 @@ const CategoryQuestions = ({
               </div>
               <span
                 className="scq__selectbox"
-                onClick={() => addQuestion(question)}
+                onClick={() => {
+                  if (question.isAdded) {
+                    removeQuestion(question);
+                  } else {
+                    addQuestion(question);
+                  }
+                }}
               >
-                <BsPlusLg />
+                {question.isAdded ? <TiMinus /> : <BsPlusLg />}
               </span>
             </div>
           );

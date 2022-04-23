@@ -1,18 +1,35 @@
-import { Question } from "../types";
+import { Question, Category } from "../types";
 
-export const addQuestion = (question: Question) => {
-  return {
-    type: "ADD_QUESTION_TO_MY_BUILD",
-    payload: question,
-  };
-};
+export const addQuestion =
+  (question: Question) => (dispatch: any, getState: any) => {
+    const category = getState().build.categories.find((category: Category) => {
+      if (category.name === question.category) return category.id;
+    });
 
-export const removeQuestion = (question: Question) => {
-  return {
-    type: "REMOVE_QUESTION_FROM_MY_BUILD",
-    payload: question,
+    dispatch({
+      type: "ADD_QUESTION_TO_MY_BUILD",
+      payload: question,
+    });
+    dispatch({
+      type: "CHANGE_ADDED_STATUS_TO_TRUE",
+      payload: { question, categoryId: category.id },
+    });
   };
-};
+
+export const removeQuestion =
+  (question: Question) => (dispatch: any, getState: any) => {
+    const category = getState().build.categories.find((category: Category) => {
+      if (category.name === question.category) return category.id;
+    });
+    dispatch({
+      type: "REMOVE_QUESTION_FROM_MY_BUILD",
+      payload: question,
+    });
+    dispatch({
+      type: "CHANGE_ADDED_STATUS_TO_FALSE",
+      payload: { question, categoryId: category.id },
+    });
+  };
 
 export const nameQuiz = (name: String) => {
   return {
@@ -27,15 +44,13 @@ export const saveBuild = () => async (dispatch: any, getState: any) => {
     const nameOfBuild = getState().myBuild.name;
     const questions = getState().myBuild.questions;
 
-    const response = await fetch(
+    await fetch(
       `https://quizizz-32675-default-rtdb.firebaseio.com/${usersId}/myBuilds/${nameOfBuild}.json`,
       {
         method: "PUT",
         body: JSON.stringify(questions),
       }
     );
-
-    console.log(response);
 
     dispatch({ type: "SAVED_BUILDasdfasdf" });
   } catch (err) {

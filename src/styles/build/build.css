@@ -100,8 +100,8 @@
 }
 
 .container--selected-category-question {
-  background-color: #8ac926;
-  background-color: #ff595e;
+  /* background-color: #8ac926;
+  background-color: #ff595e; */
   border-radius: 6px;
   margin: 1rem;
   padding: 1rem;
