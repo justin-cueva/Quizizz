@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 type Props = {
   saveBuild: () => Promise<void>;
   nameQuiz: (name: String) => {
@@ -8,14 +10,18 @@ type Props = {
 };
 
 const Form = (props: Props) => {
+  const navigate = useNavigate();
+
+  const formSubmitHandler = async (
+    e: React.SyntheticEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    await props.saveBuild();
+    navigate("/myQuizizz");
+  };
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.saveBuild();
-      }}
-      className="scq-form"
-    >
+    <form onSubmit={(e) => formSubmitHandler(e)} className="scq-form">
       <input
         value={props.nameOfMyBuild}
         onChange={(e) => {

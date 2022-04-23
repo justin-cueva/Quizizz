@@ -33,7 +33,7 @@ export default (state: DefaultStateType = defaultState, action: Actions) => {
       return { ...state, name: action.payload };
 
     case "SAVED_BUILD":
-      return defaultState;
+      return { name: "", questions: [] };
 
     default:
       return state;

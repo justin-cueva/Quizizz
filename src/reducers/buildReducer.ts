@@ -20,7 +20,8 @@ type Actions =
   | {
       type: "CHANGE_ADDED_STATUS_TO_FALSE";
       payload: { question: Question; categoryId: number };
-    };
+    }
+  | { type: "SAVED_BUILD" };
 
 export default (
   state: DefaultStateType = { categories: [], categoryQuestions: {} },
@@ -29,6 +30,8 @@ export default (
   switch (action.type) {
     case "GOT_CATEGORIES":
       return { ...state, categories: action.payload };
+    case "SAVED_BUILD":
+      return { ...state, categoryQuestions: {} };
     case "CHANGE_ADDED_STATUS_TO_TRUE":
       const newQuestionsArr = state.categoryQuestions[
         action.payload.categoryId

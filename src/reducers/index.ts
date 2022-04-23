@@ -9,11 +9,11 @@ import accountReducer from "./accountReducer";
 import myBuildReducer from "./myBuildReducer";
 
 export default combineReducers({
+  account: accountReducer,
   quizQuestions: quizQuestionsReducer,
   quizUrl: quizUrlReducer,
   quizTimer: quizTimerReducer,
   quizStats: quizStatsReducer,
   build: buildReducer,
-  account: accountReducer,
   myBuild: myBuildReducer,
 });

@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { BsPlusLg } from "react-icons/bs";
-import { FcMinus } from "react-icons/fc";
+// import { FcMinus } from "react-icons/fc";
 import { TiMinus } from "react-icons/ti";
 
 import { Question } from "../../types";
@@ -32,19 +31,20 @@ const CategoryQuestions = ({
                   {question.question}
                 </div>
                 <div className="selected-category-questions__options">
-                  {question.incorrect_answers?.map((option, index) => {
+                  {question.options?.map((option, index) => {
                     return (
                       <div
                         key={index}
-                        className="selected-category-questions__option wrong--scq"
+                        className={`selected-category-questions__option ${
+                          option === question.correct_answer
+                            ? "correct--scq"
+                            : "wrong--scq"
+                        } `}
                       >
                         {option}
                       </div>
                     );
                   })}
-                  <div className="selected-category-questions__option correct--scq">
-                    {question.correct_answer}
-                  </div>
                 </div>
               </div>
               <span

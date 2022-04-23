@@ -52,7 +52,7 @@ export const saveBuild = () => async (dispatch: any, getState: any) => {
       }
     );
 
-    dispatch({ type: "SAVED_BUILDasdfasdf" });
+    dispatch({ type: "SAVED_BUILD" });
   } catch (err) {
     console.error(err);
   }
