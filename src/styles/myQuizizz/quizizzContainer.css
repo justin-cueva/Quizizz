@@ -1,0 +1,7 @@
+.container--quizizz {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 2.4rem;
+}

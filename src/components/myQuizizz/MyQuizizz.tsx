@@ -1,4 +1,5 @@
 import Header from "../reusables/Header";
+import QuizizzContainer from "./QuizizzContainer";
 
 const MyQuizizz = () => {
   const links = [
@@ -16,6 +17,9 @@ const MyQuizizz = () => {
       }}
     >
       <Header page="My Quizizz" links={links} />
+      <div className="container--build-body">
+        <QuizizzContainer />
+      </div>
     </div>
   );
 };
