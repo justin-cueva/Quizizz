@@ -23,6 +23,22 @@
   border-radius: 6px;
 }
 
+.logged-out-box {
+  margin: 0 2rem;
+}
+
+.logged-out-message {
+  /* font-size: 3.2rem; */
+  font-size: 2.4rem;
+  line-height: 1.4;
+  max-width: 50rem;
+  text-align: center;
+  margin: 2rem auto;
+  background-color: #1982c4;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
 .scq-form {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -119,6 +135,13 @@
   margin-right: auto;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
+}
+
+/* 512px */
+@media (min-width: 32em) {
+  .logged-out-message {
+    font-size: 2.8rem;
+  }
 }
 
 /* 800 PX */

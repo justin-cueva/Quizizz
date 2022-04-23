@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
 import Header from "../reusables/Header";
@@ -45,14 +45,25 @@ const Build = ({
     <div className="page--build">
       <Header page="Build a Quiz" links={links} />
       <div className="container--build-body">
-        <CategoryTags
-          categories={categories}
-          setSelectedCategory={setSelectedCategory}
-        />
-        <Form />
-        <CategoryQuestions
-          questions={allCategoryQuestions[selectedCategory.id]}
-        />
+        {!isLoggedIn && (
+          <div className="logged-out-box">
+            <div className="logged-out-message">
+              login or create an account to start building a quiz
+            </div>
+          </div>
+        )}
+        {isLoggedIn && (
+          <Fragment>
+            <CategoryTags
+              categories={categories}
+              setSelectedCategory={setSelectedCategory}
+            />
+            <Form />
+            <CategoryQuestions
+              questions={allCategoryQuestions[selectedCategory.id]}
+            />
+          </Fragment>
+        )}
       </div>
     </div>
   );
