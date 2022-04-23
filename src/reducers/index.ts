@@ -6,6 +6,7 @@ import quizTimerReducer from "./quizTimerReducer";
 import quizStatsReducer from "./quizStatsReducer";
 import buildReducer from "./buildReducer";
 import accountReducer from "./accountReducer";
+import myBuildReducer from "./myBuildReducer";
 
 export default combineReducers({
   quizQuestions: quizQuestionsReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   quizStats: quizStatsReducer,
   build: buildReducer,
   account: accountReducer,
+  myBuild: myBuildReducer,
 });

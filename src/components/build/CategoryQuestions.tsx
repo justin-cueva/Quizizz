@@ -7,9 +7,21 @@ import { Question } from "../../types";
 
 type Props = {
   questions: Question[] | undefined;
+  addQuestion: (question: Question) => {
+    type: string;
+    payload: Question;
+  };
+  removeQuestion: (question: Question) => {
+    type: string;
+    payload: Question;
+  };
 };
 
-const CategoryQuestions = ({ questions }: Props) => {
+const CategoryQuestions = ({
+  questions,
+  addQuestion,
+  removeQuestion,
+}: Props) => {
   useEffect(() => {
     console.log(questions);
   }, [questions]);
@@ -42,7 +54,10 @@ const CategoryQuestions = ({ questions }: Props) => {
                   </div>
                 </div>
               </div>
-              <span className="scq__selectbox">
+              <span
+                className="scq__selectbox"
+                onClick={() => addQuestion(question)}
+              >
                 <BsPlusLg />
               </span>
             </div>

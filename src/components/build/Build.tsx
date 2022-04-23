@@ -9,13 +9,24 @@ import { Question, Category } from "../../types";
 import { getCategories } from "../../actions/buildActions";
 import "../../styles/build/build.css";
 import { getACategoriesQuestions } from "../../actions/buildActions";
+import {
+  addQuestion,
+  removeQuestion,
+  nameQuiz,
+  saveBuild,
+} from "../../actions/myBuildActions";
 
 const Build = ({
-  getCategories,
   categories,
-  getACategoriesQuestions,
   allCategoryQuestions,
   isLoggedIn,
+  getCategories,
+  getACategoriesQuestions,
+  addQuestion,
+  removeQuestion,
+  nameQuiz,
+  saveBuild,
+  nameOfMyBuild,
 }: PropsFromRedux) => {
   const initBuildPage = () => {
     getCategories();
@@ -58,8 +69,14 @@ const Build = ({
               categories={categories}
               setSelectedCategory={setSelectedCategory}
             />
-            <Form />
+            <Form
+              nameQuiz={nameQuiz}
+              nameOfMyBuild={nameOfMyBuild}
+              saveBuild={saveBuild}
+            />
             <CategoryQuestions
+              addQuestion={addQuestion}
+              removeQuestion={removeQuestion}
               questions={allCategoryQuestions[selectedCategory.id]}
             />
           </Fragment>
@@ -70,6 +87,9 @@ const Build = ({
 };
 
 type RootState = {
+  myBuild: {
+    name: string;
+  };
   account: {
     isLoggedIn: boolean;
   };
@@ -84,12 +104,17 @@ const mapStateToProps = (state: RootState) => {
     categories: state.build.categories,
     allCategoryQuestions: state.build.categoryQuestions,
     isLoggedIn: state.account.isLoggedIn,
+    nameOfMyBuild: state.myBuild.name,
   };
 };
 
 const connector = connect(mapStateToProps, {
   getCategories,
   getACategoriesQuestions,
+  addQuestion,
+  removeQuestion,
+  nameQuiz,
+  saveBuild,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

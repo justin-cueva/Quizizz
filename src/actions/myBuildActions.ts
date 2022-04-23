@@ -27,7 +27,7 @@ export const saveBuild = () => async (dispatch: any, getState: any) => {
     const nameOfBuild = getState().myBuild.name;
     const questions = getState().myBuild.questions;
 
-    await fetch(
+    const response = await fetch(
       `https://quizizz-32675-default-rtdb.firebaseio.com/${usersId}/myBuilds/${nameOfBuild}.json`,
       {
         method: "PUT",
@@ -35,7 +35,9 @@ export const saveBuild = () => async (dispatch: any, getState: any) => {
       }
     );
 
-    dispatch({ type: "SAVED_BUILD" });
+    console.log(response);
+
+    dispatch({ type: "SAVED_BUILDasdfasdf" });
   } catch (err) {
     console.error(err);
   }
