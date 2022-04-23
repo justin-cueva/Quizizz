@@ -6,6 +6,7 @@ import Categories from "./Categories";
 import Header from "../reusables/Header";
 
 const Home = (props: PropsFromRedux) => {
+  console.log("testing");
   const links = props.isLoggedIn
     ? [
         { to: "/build", name: "build" },
