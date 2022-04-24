@@ -20,3 +20,19 @@ export const login =
 export const logout = () => {
   return { type: "LOGOUT" };
 };
+
+export const fetchUsersQuizizz = () => async (dispatch: any, getState: any) => {
+  const isLoggedIn = getState().account.isLoggedIn;
+  const userId = getState().account.userId;
+
+  if (!isLoggedIn) return;
+
+  console.log("fetching users QUIZIZZ");
+
+  const response = await fetch(
+    `https://quizizz-32675-default-rtdb.firebaseio.com/${userId}/myBuilds.json`
+  );
+  const data = await response.json();
+  console.log(data);
+  dispatch({ type: "GOT_USERS_QUIZIZZ", payload: data });
+};

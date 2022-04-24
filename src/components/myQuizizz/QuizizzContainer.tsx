@@ -5,11 +5,16 @@ import "../../styles/myQuizizz/quizizzContainer.css";
 
 import SingleQuiz from "./SingleQuiz";
 
-const QuizizzContainer = () => {
+type Props = {
+  usersQuizizz: [];
+};
+
+const QuizizzContainer = (props: Props) => {
   return (
     <div className="container--quizizz">
-      <SingleQuiz />
-      <SingleQuiz />
+      {props.usersQuizizz.map((quiz, index) => {
+        return <SingleQuiz key={index} quiz={quiz} />;
+      })}
     </div>
   );
 };
