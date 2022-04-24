@@ -6,6 +6,7 @@ export type Question = {
   correct_answer: string;
   incorrect_answers: string[];
   options?: string[];
+  isAdded?: boolean;
 };
 
 export type Category = { id: number; name: string };

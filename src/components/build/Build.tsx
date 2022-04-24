@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
 import Header from "../reusables/Header";
@@ -9,13 +9,24 @@ import { Question, Category } from "../../types";
 import { getCategories } from "../../actions/buildActions";
 import "../../styles/build/build.css";
 import { getACategoriesQuestions } from "../../actions/buildActions";
+import {
+  addQuestion,
+  removeQuestion,
+  nameQuiz,
+  saveBuild,
+} from "../../actions/myBuildActions";
 
 const Build = ({
-  getCategories,
   categories,
-  getACategoriesQuestions,
   allCategoryQuestions,
   isLoggedIn,
+  getCategories,
+  getACategoriesQuestions,
+  addQuestion,
+  removeQuestion,
+  nameQuiz,
+  saveBuild,
+  nameOfMyBuild,
 }: PropsFromRedux) => {
   const initBuildPage = () => {
     getCategories();
@@ -45,20 +56,40 @@ const Build = ({
     <div className="page--build">
       <Header page="Build a Quiz" links={links} />
       <div className="container--build-body">
-        <CategoryTags
-          categories={categories}
-          setSelectedCategory={setSelectedCategory}
-        />
-        <Form />
-        <CategoryQuestions
-          questions={allCategoryQuestions[selectedCategory.id]}
-        />
+        {!isLoggedIn && (
+          <div className="logged-out-box">
+            <div className="logged-out-message">
+              login or create an account to start building a quiz
+            </div>
+          </div>
+        )}
+        {isLoggedIn && (
+          <Fragment>
+            <CategoryTags
+              categories={categories}
+              setSelectedCategory={setSelectedCategory}
+            />
+            <Form
+              nameQuiz={nameQuiz}
+              nameOfMyBuild={nameOfMyBuild}
+              saveBuild={saveBuild}
+            />
+            <CategoryQuestions
+              addQuestion={addQuestion}
+              removeQuestion={removeQuestion}
+              questions={allCategoryQuestions[selectedCategory.id]}
+            />
+          </Fragment>
+        )}
       </div>
     </div>
   );
 };
 
 type RootState = {
+  myBuild: {
+    name: string;
+  };
   account: {
     isLoggedIn: boolean;
   };
@@ -73,12 +104,17 @@ const mapStateToProps = (state: RootState) => {
     categories: state.build.categories,
     allCategoryQuestions: state.build.categoryQuestions,
     isLoggedIn: state.account.isLoggedIn,
+    nameOfMyBuild: state.myBuild.name,
   };
 };
 
 const connector = connect(mapStateToProps, {
   getCategories,
   getACategoriesQuestions,
+  addQuestion,
+  removeQuestion,
+  nameQuiz,
+  saveBuild,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
