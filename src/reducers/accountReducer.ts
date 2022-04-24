@@ -16,7 +16,10 @@ export default (state = defaultState, action: Actions) => {
     case "LOGOUT":
       return { ...defaultState };
     case "GOT_USERS_QUIZIZZ":
-      return { ...state, usersQuizizz: Object.values(action.payload) };
+      return {
+        ...state,
+        usersQuizizz: action.payload ? Object.values(action.payload) : [],
+      };
     default:
       return state;
   }

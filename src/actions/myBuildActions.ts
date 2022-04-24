@@ -48,7 +48,11 @@ export const saveBuild = () => async (dispatch: any, getState: any) => {
       `https://quizizz-32675-default-rtdb.firebaseio.com/${usersId}/myBuilds.json`,
       {
         method: "POST",
-        body: JSON.stringify({ questions: questions, name: nameOfBuild }),
+        body: JSON.stringify({
+          questions: questions,
+          name: nameOfBuild,
+          id: `${usersId}${Date.now()}`,
+        }),
       }
     );
 
