@@ -44,3 +44,13 @@ export const fetchUsersQuizizz = () => async (dispatch: any, getState: any) => {
   console.log(data);
   dispatch({ type: "GOT_USERS_QUIZIZZ", payload: data });
 };
+
+export const deleteAUsersQuiz =
+  (quizId: string) => async (dispatch: any, getState: any) => {
+    const userId = getState().account.userId;
+    await fetch(
+      `https://quizizz-32675-default-rtdb.firebaseio.com/${userId}/myBuilds/${quizId}.json`,
+      { method: "DELETE" }
+    );
+    dispatch({ type: "DELETED_A_QUIZ", payload: quizId });
+  };
