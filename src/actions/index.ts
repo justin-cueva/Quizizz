@@ -19,12 +19,13 @@ type Quiz = { id: string; name: string; questions: Question[] };
 
 export const getMyQuizQuestions =
   (idOfQuiz: string) => (dispatch: any, getState: any) => {
+    // const quizQuestions = getState().account.usersQuizizz.find((quiz: Quiz) => {
+    //   return quiz.id === idOfQuiz;
+    // });
     const quizQuestions = getState().account.usersQuizizz.find((quiz: Quiz) => {
       return quiz.id === idOfQuiz;
     }).questions;
-    // get the quiz questions
-    // if we already fetched the our quizizz then we get the questions from redux with getState
-    // but if not then we need to then fetch that one quiz from firebase
+    console.log(quizQuestions);
+    console.log("this should run THIRD");
     dispatch({ type: "GET_QUESTIONS", payload: quizQuestions });
-    dispatch({ type: "QUESTIONS_ARE_LOADED", payload: true });
   };
