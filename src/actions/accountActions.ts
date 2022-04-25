@@ -33,15 +33,17 @@ export const fetchUsersQuizizz = () => async (dispatch: any, getState: any) => {
   const isLoggedIn = getState().account.isLoggedIn;
   const userId = getState().account.userId;
 
-  if (!isLoggedIn) return;
-
-  console.log("fetching users QUIZIZZ");
+  if (!isLoggedIn) {
+    console.log("your not even logged in");
+    return;
+  }
+  console.log("this should run FIRST");
 
   const response = await fetch(
     `https://quizizz-32675-default-rtdb.firebaseio.com/${userId}/myBuilds.json`
   );
   const data = await response.json();
-  console.log(data);
+  console.log("this should run SECOND");
   dispatch({ type: "GOT_USERS_QUIZIZZ", payload: data });
 };
 

@@ -5,6 +5,7 @@ import Header from "../reusables/Header";
 import CategoryTags from "./CategoryTags";
 import Form from "./Form";
 import CategoryQuestions from "./CategoryQuestions";
+import Message from "../reusables/Message";
 import { Question, Category } from "../../types";
 import { getCategories } from "../../actions/buildActions";
 import "../../styles/build/build.css";
@@ -57,11 +58,9 @@ const Build = ({
       <Header page="Build a Quiz" links={links} />
       <div className="container--build-body">
         {!isLoggedIn && (
-          <div className="logged-out-box">
-            <div className="logged-out-message">
-              login or create an account to start building a quiz
-            </div>
-          </div>
+          <Message
+            text={"login or create an account to start building a quiz"}
+          />
         )}
         {isLoggedIn && (
           <Fragment>

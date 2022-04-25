@@ -4,6 +4,7 @@ import "../../styles/home/header.css";
 import "../../styles/myQuizizz/quizizzContainer.css";
 
 import SingleQuiz from "./SingleQuiz";
+import Message from "../reusables/Message";
 import { Question } from "../../types";
 
 type Props = {
@@ -20,15 +21,20 @@ type Quiz = {
 const QuizizzContainer = (props: Props) => {
   return (
     <div className="container--quizizz">
-      {props.usersQuizizz.map((quiz: Quiz, index) => {
-        return (
-          <SingleQuiz
-            key={index}
-            quiz={quiz}
-            deleteAUsersQuiz={props.deleteAUsersQuiz}
-          />
-        );
-      })}
+      {props.usersQuizizz.length > 0 ? (
+        props.usersQuizizz.map((quiz: Quiz, index) => {
+          console.log("entered yes quizizz");
+          return (
+            <SingleQuiz
+              key={index}
+              quiz={quiz}
+              deleteAUsersQuiz={props.deleteAUsersQuiz}
+            />
+          );
+        })
+      ) : (
+        <Message text="you have'nt built any quizizz yet" />
+      )}
     </div>
   );
 };

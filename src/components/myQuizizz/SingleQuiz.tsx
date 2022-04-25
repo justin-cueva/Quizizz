@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { Question } from "../../types";
 import "../../styles/myQuizizz/singleQuiz.css";
 
@@ -11,13 +13,21 @@ type Props = {
 };
 
 const SingleQuiz = ({ quiz, deleteAUsersQuiz }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <div className="single-quiz">
       <div>
         <span>{quiz.name}</span>
       </div>
       <div className="single-quiz__actions">
-        <button className="btn--take-quiz" type="button">
+        <button
+          onClick={() => {
+            navigate(`/myQuizizz/${quiz.id}`);
+          }}
+          className="btn--take-quiz"
+          type="button"
+        >
           take quiz
         </button>
         <button

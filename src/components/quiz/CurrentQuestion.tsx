@@ -13,10 +13,6 @@ const CurrentQuestion = ({
   isLoading,
   isShowingResults,
 }: Props) => {
-  // useEffect(() => {
-  //   console.log(`questions are showing: ${isShowingResults}`);
-  // }, [isShowingResults]);
-
   const loadingSpinner = (
     <div className="spinner">
       <Oval
