@@ -4,10 +4,9 @@ import { useParams } from "react-router-dom";
 
 import CurrentQuestion from "./CurrentQuestion";
 import Stats from "./Stats";
-import { getQuestions } from "../../actions";
-import { setUrl } from "../../actions";
+import { getQuestions, getMyQuizQuestions, setUrl } from "../../actions";
 
-const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
+const Quiz = ({ getQuestions, setUrl, getMyQuizQuestions }: PropsFromRedux) => {
   const params = useParams();
   const [questionNumber, setQuestionNumber] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -18,11 +17,22 @@ const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
     setUrl(quiz);
   };
 
+  const initMyQuiz = (myQuizId: string) => {
+    getMyQuizQuestions(myQuizId);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     if (typeof params.quiz === "string") {
       initQuiz(params.quiz);
+    } else if (typeof params.myQuizId === "string") {
+      initMyQuiz(params.myQuizId);
+      console.log("entered block");
+      // now this is where we call an action creator like initMyQuiz
     } else {
-      console.error("invalid path");
+      console.log(params);
+      console.log(typeof params.quiz);
+      console.error("invalid path (error wrote by justin)");
     }
   }, []);
 
@@ -50,7 +60,7 @@ const Quiz = ({ getQuestions, setUrl }: PropsFromRedux) => {
   );
 };
 
-const connector = connect(null, { getQuestions, setUrl });
+const connector = connect(null, { getQuestions, setUrl, getMyQuizQuestions });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

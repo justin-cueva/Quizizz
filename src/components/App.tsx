@@ -25,6 +25,7 @@ const App = (props: PropsFromRedux) => {
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path={"/quiz/:quiz"} element={<Quiz />} />
+          <Route path={"/myQuizizz/:myQuizId"} element={<Quiz />} />
           <Route path={"/summary"} element={<Summary />} />
           <Route path={"/build"} element={<Build />} />
           <Route path={"/auth"} element={<Auth />} />
@@ -34,6 +35,8 @@ const App = (props: PropsFromRedux) => {
     </div>
   );
 };
+
+// myQuizizz
 
 const connector = connect(null, { setLoggedIn });
 
