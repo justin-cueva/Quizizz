@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import "../../styles/summary/Summary.css";
 import "../../styles/quiz/CurrentQuestion.css";
-import Header from "./Header";
+// import Header from "./Header";
+import Header from "../reusables/Header";
 import { Question } from "../../types";
 import { resetScoreAndStreak } from "../../actions/quizStatsActions";
 import { resetUrl } from "../../actions";
@@ -27,6 +28,12 @@ const Summary = ({
     100
   ).toFixed(0);
 
+  const links = [
+    { to: "/", name: "Home" },
+    { to: "/build", name: "Build" },
+    { to: "/myQuizizz", name: "My Quizizz" },
+  ];
+
   return (
     <div
       style={{
@@ -37,7 +44,7 @@ const Summary = ({
         flex: "1",
       }}
     >
-      <Header />
+      <Header page="Summary" links={links} />
       <div className="container--content container--summary">
         <div className="max-width-72">
           <div className="summary__accuracy">

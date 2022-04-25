@@ -6,15 +6,14 @@ import Categories from "./Categories";
 import Header from "../reusables/Header";
 
 const Home = (props: PropsFromRedux) => {
-  console.log("testing");
   const links = props.isLoggedIn
     ? [
-        { to: "/build", name: "build" },
-        { to: "/myQuizizz", name: "my quizizz" },
+        { to: "/build", name: "Build" },
+        { to: "/myQuizizz", name: "My Quizizz" },
       ]
     : [
-        { to: "/auth", name: "auth" },
-        { to: "/build", name: "build" },
+        { to: "/auth", name: "Auth" },
+        { to: "/build", name: "Build" },
       ];
 
   return (

@@ -45,12 +45,12 @@ const Build = ({
 
   const links = isLoggedIn
     ? [
-        { to: "/myQuizizz", name: "my quizizz" },
-        { to: "/", name: "home" },
+        { to: "/myQuizizz", name: "My Quizizz" },
+        { to: "/", name: "Home" },
       ]
     : [
-        { to: "/", name: "home" },
-        { to: "/auth", name: "auth" },
+        { to: "/", name: "Home" },
+        { to: "/auth", name: "Auth" },
       ];
 
   return (
