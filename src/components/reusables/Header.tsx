@@ -1,17 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { connect, ConnectedProps } from "react-redux";
 
+import { logout } from "../../actions/accountActions";
 import "../../styles/build/build.css";
 import "../../styles/generals.css";
 import "../../styles/home/header.css";
 
-type Link = { to: string; name: string };
-
-type Props = {
-  page: string;
-  links: Link[];
-};
-
-const Header = ({ page, links }: Props) => {
+const Header = ({ page, links, isLoggedIn, logout }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -29,9 +24,39 @@ const Header = ({ page, links }: Props) => {
             </div>
           );
         })}
+        {isLoggedIn && (
+          <button
+            className="btn--logout"
+            onClick={() => {
+              logout();
+              navigate("/");
+            }}
+          >
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-export default Header;
+type Link = { to: string; name: string };
+
+type RootState = {
+  account: { isLoggedIn: boolean };
+};
+
+const mapStateToProps = (state: RootState) => {
+  return { isLoggedIn: state.account.isLoggedIn };
+};
+
+const connector = connect(mapStateToProps, { logout });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & {
+  page: string;
+  links: Link[];
+};
+
+export default connector(Header);

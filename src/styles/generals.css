@@ -1,7 +1,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .link--header {
@@ -23,6 +23,15 @@
 
 .link--header:hover::after {
   width: 100%;
+}
+
+.btn--logout {
+  background-color: transparent;
+  border: 2px solid #fff;
+  font-size: 2rem;
+  color: #fff;
+  padding: 1rem 2rem;
+  cursor: pointer;
 }
 
 .message-box {
