@@ -5,10 +5,12 @@ type Props = {
   quiz: {
     name: string;
     questions: Question[];
+    id: string;
   };
+  deleteAUsersQuiz: (quizId: string) => Promise<void>;
 };
 
-const SingleQuiz = ({ quiz }: Props) => {
+const SingleQuiz = ({ quiz, deleteAUsersQuiz }: Props) => {
   return (
     <div className="single-quiz">
       <div>
@@ -18,7 +20,11 @@ const SingleQuiz = ({ quiz }: Props) => {
         <button className="btn--take-quiz" type="button">
           take quiz
         </button>
-        <button className="btn--delete" type="button">
+        <button
+          onClick={() => deleteAUsersQuiz(quiz.id)}
+          className="btn--delete"
+          type="button"
+        >
           delete quiz
         </button>
       </div>

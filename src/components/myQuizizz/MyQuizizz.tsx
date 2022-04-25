@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from "react-redux";
 import Header from "../reusables/Header";
 import QuizizzContainer from "./QuizizzContainer";
 import { fetchUsersQuizizz } from "../../actions/accountActions";
+import { deleteAUsersQuiz } from "../../actions/accountActions";
 
 const MyQuizizz = (props: PropsFromRedux) => {
   const links = [
@@ -26,7 +27,10 @@ const MyQuizizz = (props: PropsFromRedux) => {
     >
       <Header page="My Quizizz" links={links} />
       <div className="container--build-body">
-        <QuizizzContainer usersQuizizz={props.usersQuizizz} />
+        <QuizizzContainer
+          usersQuizizz={props.usersQuizizz}
+          deleteAUsersQuiz={props.deleteAUsersQuiz}
+        />
       </div>
     </div>
   );
@@ -42,7 +46,10 @@ const mapStateToProps = (state: RootState) => {
   return { usersQuizizz: state.account.usersQuizizz };
 };
 
-const connector = connect(mapStateToProps, { fetchUsersQuizizz });
+const connector = connect(mapStateToProps, {
+  fetchUsersQuizizz,
+  deleteAUsersQuiz,
+});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

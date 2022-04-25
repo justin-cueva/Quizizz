@@ -43,15 +43,16 @@ export const saveBuild = () => async (dispatch: any, getState: any) => {
     const usersId = getState().account.userId;
     const nameOfBuild = getState().myBuild.name;
     const questions = getState().myBuild.questions;
+    const quizId = `${usersId}${Date.now()}`;
 
     await fetch(
-      `https://quizizz-32675-default-rtdb.firebaseio.com/${usersId}/myBuilds.json`,
+      `https://quizizz-32675-default-rtdb.firebaseio.com/${usersId}/myBuilds/${quizId}.json`,
       {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({
           questions: questions,
           name: nameOfBuild,
-          id: `${usersId}${Date.now()}`,
+          id: quizId,
         }),
       }
     );

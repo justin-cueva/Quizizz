@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
 import Quiz from "./quiz/Quiz";
 import Home from "./home/Home";
@@ -6,8 +8,17 @@ import Summary from "./summary/Summary";
 import Build from "./build/Build";
 import Auth from "./auth/Auth";
 import MyQuizizz from "./myQuizizz/MyQuizizz";
+import { setLoggedIn } from "../actions/accountActions";
 
-const App = () => {
+const App = (props: PropsFromRedux) => {
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      props.setLoggedIn();
+      // change state to logged in
+    }
+  }, []);
+
   return (
     <div>
       <BrowserRouter>
@@ -24,4 +35,8 @@ const App = () => {
   );
 };
 
-export default App;
+const connector = connect(null, { setLoggedIn });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(App);
