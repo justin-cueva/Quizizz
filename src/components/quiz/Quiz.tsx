@@ -14,12 +14,13 @@ const Quiz = ({ getQuestions, setUrl, getMyQuizQuestions }: PropsFromRedux) => {
   const initQuiz = async (quiz: string) => {
     await getQuestions(quiz);
     setIsLoading(false);
-    setUrl(quiz);
+    setUrl(`/quiz/${quiz}`);
   };
 
   const initMyQuiz = (myQuizId: string) => {
     getMyQuizQuestions(myQuizId);
     setIsLoading(false);
+    setUrl(`/myQuizizz/${myQuizId}`);
   };
 
   useEffect(() => {

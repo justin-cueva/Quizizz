@@ -56,7 +56,9 @@ const Summary = ({
             <button
               className="btn--play-again"
               onClick={() => {
-                navigate(`/quiz/${quizUrl}`);
+                // navigate(`/quiz/${quizUrl}`);
+                console.log(quizUrl);
+                navigate(quizUrl);
               }}
             >
               Play again
