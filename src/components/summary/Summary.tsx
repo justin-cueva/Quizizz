@@ -31,7 +31,6 @@ const Summary = ({
   const links = [
     { to: "/", name: "Home" },
     { to: "/build", name: "Build" },
-    { to: "/myQuizizz", name: "My Quizizz" },
   ];
 
   return (

@@ -35,6 +35,16 @@ const Header = ({ page, links, isLoggedIn, logout }: Props) => {
             Logout
           </button>
         )}
+        {!isLoggedIn && (
+          <button
+            className="btn--logout"
+            onClick={() => {
+              navigate("/auth");
+            }}
+          >
+            Login
+          </button>
+        )}
       </div>
     </div>
   );

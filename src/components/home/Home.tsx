@@ -11,10 +11,7 @@ const Home = (props: PropsFromRedux) => {
         { to: "/build", name: "Build" },
         { to: "/myQuizizz", name: "My Quizizz" },
       ]
-    : [
-        { to: "/auth", name: "Auth" },
-        { to: "/build", name: "Build" },
-      ];
+    : [{ to: "/build", name: "Build" }];
 
   return (
     <div

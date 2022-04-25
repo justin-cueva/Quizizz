@@ -48,10 +48,7 @@ const Build = ({
         { to: "/myQuizizz", name: "My Quizizz" },
         { to: "/", name: "Home" },
       ]
-    : [
-        { to: "/", name: "Home" },
-        { to: "/auth", name: "Auth" },
-      ];
+    : [{ to: "/", name: "Home" }];
 
   return (
     <div className="page--build">
