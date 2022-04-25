@@ -1,18 +1,24 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 import ReactDOM from "react-dom";
 import { FaRunning, FaFlagCheckered } from "react-icons/fa";
 
 import { Question } from "../../types";
+import { resetUrl } from "../../actions";
+import { resetScoreAndStreak } from "../../actions/quizStatsActions";
 import "../../styles/quiz/Modal.css";
 
 const PauseModal = ({
   element,
   score,
-  setQuizIsPaused,
   questionNumber,
   numberOfQuestions,
+  setQuizIsPaused,
+  resetUrl,
+  resetScoreAndStreak,
 }: Props) => {
+  const navigate = useNavigate();
   const questionsLeft = numberOfQuestions - (questionNumber - 1);
   const percentDone = `${100 - (questionsLeft / numberOfQuestions) * 100}%`;
   const currentScore = `${(score / (questionNumber - 1)) * 100}%`;
@@ -53,9 +59,21 @@ const PauseModal = ({
           <button
             type="button"
             onClick={() => setQuizIsPaused(false)}
-            className="modal__resume-button"
+            className="modal__resume-button modal__button btn--resume"
           >
             Resume
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setQuizIsPaused(false);
+              resetUrl();
+              navigate("/");
+              resetScoreAndStreak();
+            }}
+            className="modal__resume-button modal__button btn--quit"
+          >
+            Quit
           </button>
         </div>
       </div>
@@ -76,7 +94,7 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const connector = connect(mapStateToProps);
+const connector = connect(mapStateToProps, { resetUrl, resetScoreAndStreak });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

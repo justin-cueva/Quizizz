@@ -79,13 +79,22 @@
   font-size: 2.2rem;
 }
 
-.modal__resume-button {
+.modal__button {
   font-size: 2.2rem;
   padding: 0.5rem 1rem;
   border-radius: 10px;
   border: none;
   align-self: stretch;
   transition: all 200ms ease;
+}
+
+.btn--resume {
+  background-color: #fff;
+}
+
+.btn--quit {
+  background-color: #ff595e;
+  color: #fff;
 }
 
 .modal__resume-button:hover {

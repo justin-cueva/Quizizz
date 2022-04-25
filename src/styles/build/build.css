@@ -121,13 +121,6 @@
   border-radius: 4px;
 }
 
-/* 512px */
-@media (min-width: 32em) {
-  .logged-out-message {
-    font-size: 2.8rem;
-  }
-}
-
 /* 800 PX */
 @media (min-width: 50em) {
   .heading--main {
