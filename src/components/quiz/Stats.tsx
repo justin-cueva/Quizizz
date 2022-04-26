@@ -20,7 +20,7 @@ const Stats = ({
   setQuestionNumber,
   setQuestionsAreLoaded,
 }: Props) => {
-  const [timeLeft, setTimeLeft] = useState(1000);
+  const [timeLeft, setTimeLeft] = useState(10);
   const numberOfQuestions = quizQuestions.length;
   const isLastQuestion = quizQuestions.length === questionNumber;
   const navigate = useNavigate();
@@ -35,16 +35,16 @@ const Stats = ({
       !quizTimer.questionsAreLoaded ||
       quizTimer.quizIsPaused
     ) {
-    } else if (timeLeft > 1) {
+    } else if (timeLeft >= 0) {
       setTimeout(() => {
         setTimeLeft((prev) => prev - 1);
-      }, 10);
+      }, 1000);
       // when time runs out
     } else {
       if (!isLastQuestion) {
         // when time runs out but not on the last question
         setQuestionNumber((prev) => prev + 1);
-        setTimeLeft(1000);
+        setTimeLeft(10);
         // resetStreak();
       } else {
         // when the time runs out on the last question
@@ -59,7 +59,7 @@ const Stats = ({
   ]);
 
   useEffect(() => {
-    setTimeLeft(1000);
+    setTimeLeft(10);
   }, [questionNumber]);
 
   const element = document.querySelector("#pausing-modal");
@@ -77,7 +77,7 @@ const Stats = ({
         <div className="timer-bar">
           <div
             className="time-left"
-            style={{ width: `${timeLeft / 10}%` }}
+            style={{ width: `${timeLeft * 10}%` }}
           ></div>
         </div>
       </div>
