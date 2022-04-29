@@ -1,8 +1,13 @@
 import { useState, useRef, Fragment } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 import { register, login } from "../../actions/accountActions";
+import { auth } from "../../firebase/firebase-config";
 import "../../styles/auth/form.css";
 
 // DUMMY CREDENTIALS
@@ -14,6 +19,7 @@ const Form = (props: PropsFromRedux) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formMode, setFormMode] = useState<string>("LOGIN");
+  const [error, setError] = useState<any>("");
 
   const heading = formMode === "SIGN_UP" ? "Sign Up" : "Login";
   const submitButtonText = formMode === "SIGN_UP" ? "Create account" : "Login";
@@ -24,19 +30,25 @@ const Form = (props: PropsFromRedux) => {
 
   const register = async (email: string, password: string) => {
     try {
-      await props.register(email, password);
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("this should not run bc wrong creds");
+      props.register(user.user.uid);
       navigate("/");
     } catch (err) {
       console.error(err);
+      setError(err);
     }
   };
 
   const login = async (email: string, password: string) => {
     try {
-      await props.login(email, password);
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      console.log("this should not run bc wrong creds");
+      props.login(user.user.uid);
       navigate("/");
     } catch (err) {
       console.error(err);
+      setError(err);
     }
   };
 
@@ -57,6 +69,7 @@ const Form = (props: PropsFromRedux) => {
       className="auth__form"
     >
       <h3 className="auth__label">{heading}</h3>
+      {error && <p className="auth__error">{error.message}</p>}
       <div className="auth__fields">
         <div className="auth__field">
           <label>Your Email</label>
