@@ -78,8 +78,8 @@
 }
 
 .container--selected-category-questions {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   font-size: 1.4rem;
 }
 
@@ -126,6 +126,9 @@
   .heading--main {
     font-size: 2.8rem;
   }
+  .container--selected-category-questions {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* 1200 PX */
@@ -139,5 +142,8 @@
 @media (min-width: 100em) {
   .heading--main {
     font-size: 4rem;
+  }
+  .container--selected-category-questions {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
