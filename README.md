@@ -4,6 +4,11 @@ A web app where you can create, delete, and take a quiz.
 * link to live site: https://quizizz-by-justin.netlify.app/
 * open the console to see the correct answer
 
+<br/>
+If you don't want to create an account you can log in with
+* email: test@test.com
+* pass: 123abc
+
 ## Project Guildlines
 
 The aim for this project was to build a web app that used an API to get questions and take a quiz. In addition you are able to pause the quiz to check your current results and once you finish the quiz you are able to see your final results. <br/>
