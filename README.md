@@ -3,9 +3,9 @@
 A web app where you can create, delete, and take a quiz.
 * link to live site: https://quizizz-by-justin.netlify.app/
 * open the console to see the correct answer
-
 <br/>
-If you don't want to create an account you can log in with
+If you don't want to create an account you can log in with.
+<br/>
 * email: test@test.com
 * pass: 123abc
 
