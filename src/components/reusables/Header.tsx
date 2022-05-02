@@ -77,10 +77,43 @@ const Header = ({ page, links, isLoggedIn, logout }: Props) => {
             </span>
             <div className="burger-modal">
               <div className="burger-modal__links">
-                <div>link</div>
-                <div>link</div>
-                <div>link</div>
-                <div>link</div>
+                {links.map((link, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className=""
+                      onClick={() => {
+                        setModalIsOpen(false);
+                        navigate(link.to);
+                      }}
+                    >
+                      {link.name}
+                    </div>
+                  );
+                })}
+                {isLoggedIn && (
+                  <button
+                    className="btn--modal-auth"
+                    onClick={() => {
+                      setModalIsOpen(false);
+                      logout();
+                      navigate("/");
+                    }}
+                  >
+                    Logout
+                  </button>
+                )}
+                {!isLoggedIn && (
+                  <button
+                    className="btn--modal-auth"
+                    onClick={() => {
+                      setModalIsOpen(false);
+                      navigate("/auth");
+                    }}
+                  >
+                    Login
+                  </button>
+                )}
               </div>
             </div>
           </Fragment>,

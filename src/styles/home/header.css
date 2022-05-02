@@ -5,6 +5,13 @@
   height: 100%;
 }
 
+.burger-modal__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
 .burger-modal {
   position: fixed;
   top: 50%;
@@ -13,17 +20,26 @@
   z-index: 20;
   color: #fff;
   font-weight: 600;
-  font-size: 5.2rem;
+  font-size: 4rem;
   border-radius: 6px;
 }
 
 .icon--close-burger {
-  font-size: 5.2rem;
+  font-size: 4rem;
   color: #fff;
   position: absolute;
-  top: 3.2rem;
-  right: 3.2rem;
+  top: 1rem;
+  right: 1rem;
   z-index: 20;
+}
+
+.btn--modal-auth {
+  background-color: transparent;
+  font-size: 4rem;
+  border: none;
+  color: #fff;
+  padding: 1rem;
+  border: 2px solid #fff;
 }
 
 .header {
