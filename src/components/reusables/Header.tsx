@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 import { logout } from "../../actions/accountActions";
 import "../../styles/build/build.css";
@@ -46,6 +47,9 @@ const Header = ({ page, links, isLoggedIn, logout }: Props) => {
           </button>
         )}
       </div>
+      <span className="icon--burger">
+        <GiHamburgerMenu className="icon--burger" />
+      </span>
     </div>
   );
 };
