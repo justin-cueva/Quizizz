@@ -1,14 +1,24 @@
+import { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { ImCross } from "react-icons/im";
+import { createPortal } from "react-dom";
 
 import { logout } from "../../actions/accountActions";
 import "../../styles/build/build.css";
 import "../../styles/generals.css";
 import "../../styles/home/header.css";
+import "../../styles/quiz/Modal.css";
 
 const Header = ({ page, links, isLoggedIn, logout }: Props) => {
   const navigate = useNavigate();
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>();
+
+  useEffect(() => console.log(modalIsOpen), [modalIsOpen]);
+
+  const burgerPortal = document.querySelector("#burger-modal");
+  if (!burgerPortal) return <div></div>;
 
   return (
     <div className="header header--home ">
@@ -47,9 +57,35 @@ const Header = ({ page, links, isLoggedIn, logout }: Props) => {
           </button>
         )}
       </div>
-      <span className="icon--burger">
-        <GiHamburgerMenu className="icon--burger" />
-      </span>
+      {!modalIsOpen && (
+        <span className="icon--burger" onClick={() => setModalIsOpen(true)}>
+          <GiHamburgerMenu />
+        </span>
+      )}
+      {modalIsOpen &&
+        createPortal(
+          <Fragment>
+            <div
+              className="overlay"
+              onClick={() => setModalIsOpen(false)}
+            ></div>
+            <span
+              className="icon--close-burger"
+              onClick={() => setModalIsOpen(false)}
+            >
+              <ImCross />
+            </span>
+            <div className="burger-modal">
+              <div className="burger-modal__links">
+                <div>link</div>
+                <div>link</div>
+                <div>link</div>
+                <div>link</div>
+              </div>
+            </div>
+          </Fragment>,
+          burgerPortal
+        )}
     </div>
   );
 };
